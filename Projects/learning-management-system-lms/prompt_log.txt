@@ -1,0 +1,211 @@
+name: prompt-logger
+description: 'You are a Conversation Auditor.'
+risk: safe
+source: community
+date_added: '2026-05-20'
+---
+ 
+## Use this skill when
+ 
+- Working on tasks related to prompt logger
+- Needing guidance, best practices, or generation for prompt logger
+ 
+## Do not use this skill when
+ 
+- The task is unrelated to prompt logger
+- You need a different domain or tool outside this scope
+ 
+## Instructions
+ 
+- Clarify goals, constraints, and required inputs.
+- Apply relevant best practices and validate outcomes.
+- Provide actionable steps and verification.
+ 
+**Role and Execution Details:**
+You are a Conversation Auditor. Your sole responsibility is to record every user message exactly as it is received.
+ 
+Verbatim Recording :-
+ - Capture EVERY user input exactly as entered.
+ - Preserve all formatting, including whitespace, line breaks, and special characters.
+ - Do NOT modify, clean, or normalize the text in any way.
+ 
+Storage Rules :-
+ - Store ONLY the user input.
+ - Do NOT include assistant responses.
+ - Do NOT include timestamps, metadata, or labels unless explicitly requested by the user.
+ - If the user input is empty, ignore it.
+Formatting Rules :-
+ - Each user input should be on a new line.
+ - Separate entries using a blank line.
+ 
+## Limitations
+- Use this skill only when the task clearly matches the scope described above.
+- Do not treat the output as a substitute for environment-specific validation, testing, or expert review.
+- Stop and ask for clarification if required inputs, permissions, safety boundaries, or success criteria are missing.
+- Ensure all security, privacy, and compliance guidelines are followed.
+- The instructions provided are guidelines and should be adapted to the specific context of the codebase or project.
+
+Problem Statement
+
+Create an online learning platform where instructors can upload courses and students can enroll, learn, take quizzes, and earn certificates.
+
+make brd.md file for above problem statement 
+based on brd.md file create kpi file which content acceptance cretira of whole project  
+also in prd.md file all business requirement detailed should be there
+thats only the task for now
+create all md file in that folder 
+
+based on prd.md and kpi.md list down the total 10 features which to be made
+
+now
+Create a production-ready Markdown feature specification file named `[feature-name].md`.
+
+firstly create one folder as a features then insert md file in it
+
+# 1. User Authentication & Role-Based Access Control (RBAC)
+
+Feature:
+Build a secure authentication system with Student, Instructor, and Admin roles, including social login support.
+
+Scope:
+
+* Registration & Login
+* Google/GitHub OAuth
+* Role-Based Access
+* Dashboard Routing
+* Session Management
+
+---
+
+# 2. Instructor Dashboard & Course Setup
+
+Feature:
+Create an instructor dashboard for managing courses, content, and performance metrics.
+
+Scope:
+
+* Course Management
+* Draft & Publish Courses
+* Course Analytics
+* Instructor Overview
+* Dashboard Metrics
+
+---
+
+# 3. Drag-and-Drop Curriculum Builder
+
+Feature:
+Build a visual curriculum builder for organizing course content hierarchies.
+
+Scope:
+
+* Sections Management
+* Modules Management
+* Lesson Organization
+* Drag & Drop Sorting
+* Curriculum Structure
+
+---
+
+# 4. Multimedia Lecture Uploader & Cloud Storage
+
+Feature:
+Enable instructors to upload and manage course materials stored in the cloud.
+
+Scope:
+
+* Video Uploads
+* PDF Uploads
+* Markdown Content
+* Cloud Storage Integration
+* Upload Progress Tracking
+
+---
+
+# 5. Smart Course Catalog Search & Discovery
+
+Feature:
+Build a searchable course marketplace with advanced filtering and discovery tools.
+
+Scope:
+
+* Course Search
+* Difficulty Filters
+* Rating Filters
+* Duration Filters
+* Auto-Complete Search
+
+---
+
+# 6. Student Dashboard & Enrollment Manager
+
+Feature:
+Create a student dashboard for course enrollment and learning progress management.
+
+Scope:
+
+* Course Enrollment
+* Learning Dashboard
+* Progress Tracking
+* Active Courses
+* Completion Statistics
+
+---
+
+# 7. Immersive Course Playback Workspace
+
+Feature:
+Develop a learning workspace combining content playback with curriculum navigation.
+
+Scope:
+
+* Video Player
+* Document Viewer
+* Curriculum Sidebar
+* Lesson Navigation
+* Learning Interface
+
+---
+
+# 8. Real-Time Student Progress Auto-Saver
+
+Feature:
+Automatically track and save student learning progress during course consumption.
+
+Scope:
+
+* Progress Tracking
+* Auto Save
+* Completion Detection
+* Resume Playback
+* Learning Analytics
+
+---
+
+# 9. Interactive Assessment & Quiz Engine
+
+Feature:
+Build an assessment system with automated grading and instant feedback.
+
+Scope:
+
+* Quiz Creation
+* Multiple Choice Questions
+* Auto Grading
+* Scorecards
+* Result Analytics
+
+---
+
+# 10. Digital Certificate Generator & Public Verifier
+
+Feature:
+Generate course completion certificates with public verification support.
+
+Scope:
+
+* Certificate Generation
+* PDF Export
+* Completion Validation
+* Public Verification
+* Certificate Management

@@ -1,0 +1,211 @@
+name: prompt-logger
+description: 'You are a Conversation Auditor.'
+risk: safe
+source: community
+date_added: '2026-05-20'
+---
+ 
+## Use this skill when
+ 
+- Working on tasks related to prompt logger
+- Needing guidance, best practices, or generation for prompt logger
+ 
+## Do not use this skill when
+ 
+- The task is unrelated to prompt logger
+- You need a different domain or tool outside this scope
+ 
+## Instructions
+ 
+- Clarify goals, constraints, and required inputs.
+- Apply relevant best practices and validate outcomes.
+- Provide actionable steps and verification.
+ 
+**Role and Execution Details:**
+You are a Conversation Auditor. Your sole responsibility is to record every user message exactly as it is received.
+ 
+Verbatim Recording :-
+ - Capture EVERY user input exactly as entered.
+ - Preserve all formatting, including whitespace, line breaks, and special characters.
+ - Do NOT modify, clean, or normalize the text in any way.
+ 
+Storage Rules :-
+ - Store ONLY the user input.
+ - Do NOT include assistant responses.
+ - Do NOT include timestamps, metadata, or labels unless explicitly requested by the user.
+ - If the user input is empty, ignore it.
+Formatting Rules :-
+ - Each user input should be on a new line.
+ - Separate entries using a blank line.
+ 
+## Limitations
+- Use this skill only when the task clearly matches the scope described above.
+- Do not treat the output as a substitute for environment-specific validation, testing, or expert review.
+- Stop and ask for clarification if required inputs, permissions, safety boundaries, or success criteria are missing.
+- Ensure all security, privacy, and compliance guidelines are followed.
+- The instructions provided are guidelines and should be adapted to the specific context of the codebase or project.
+
+Problem Statement
+
+Create a marketplace where freelancers and clients can connect, post projects, submit proposals, manage contracts, and handle payments securely.
+
+make brd.md file for above problem statement 
+based on brd.md file create kpi file which content acceptance cretira of whole project  
+also in prd.md file all bussiness requirement detailed should be there
+thats only the task for now
+create all md file in that folder 
+
+based on prd.md and kpi.md list down the total 10 features which to be made
+
+now
+Create a production-ready Markdown feature specification file named `[feature-name].md`.
+
+firstly create one folder as a features then insert md file in it
+
+ 1. User Authentication & Role-Based Onboarding
+
+Feature:
+Build a secure authentication system with Email/Password, Google, and GitHub OAuth supporting Client and Freelancer roles under one account.
+
+Scope:
+
+* Registration & Login
+* OAuth Authentication
+* JWT Sessions
+* Role Switching
+* Profile Onboarding
+
+---
+
+ 2. KYC Verification Integration
+
+Feature:
+Integrate identity verification for freelancers once cumulative payouts exceed $500.
+
+Scope:
+
+* KYC Workflow
+* Stripe Identity Integration
+* Verification Status
+* Threshold Monitoring
+* Compliance Tracking
+
+---
+
+#3. Freelancer Profile & Portfolio Portal
+
+Feature:
+Build customizable freelancer profiles with skills, rates, and portfolio showcases.
+
+Scope:
+
+* Professional Profile
+* Hourly Rates
+* Skill Tags
+* Portfolio Gallery
+* Public Profile Page
+
+---
+
+ 4. Project Creation & Lifecycle Manager
+
+Feature:
+Allow clients to create, manage, publish, and archive projects.
+
+Scope:
+
+* Project Wizard
+* File Attachments
+* Draft Projects
+* Published Projects
+* Archived Projects
+
+---
+
+ 5. Job Search & Advanced Discovery Index
+
+Feature:
+Build a searchable project marketplace with advanced filtering.
+
+Scope:
+
+* Keyword Search
+* Skill Filters
+* Budget Filters
+* Category Filters
+* Sorting & Pagination
+
+---
+
+ 6. Token-Gated Proposal Submission Engine
+
+Feature:
+Enable freelancers to submit proposals using a token-based bidding system.
+
+Scope:
+
+* Proposal Submission
+* Connect Token System
+* Cover Letters
+* Milestone Plans
+* Spam Prevention
+
+---
+
+ 7. Bidding Negotiation & Contract Builder
+
+Feature:
+Provide a negotiation workspace that generates contracts automatically after agreement.
+
+Scope:
+
+* Proposal Negotiation
+* Budget Revisions
+* Milestone Editing
+* Agreement Workflow
+* Contract Generation
+
+---
+
+ 8. Stripe Escrow Payment Gateway
+
+Feature:
+Implement escrow-based payments using Stripe.
+
+Scope:
+
+* Payment Collection
+* Escrow Funding
+* Milestone Allocation
+* Stripe Integration
+* Payment Security
+
+---
+
+ 9. Milestone Submission & Escrow Release Flow
+
+Feature:
+Manage deliverable submissions, approvals, and automated fund releases.
+
+Scope:
+
+* Deliverable Uploads
+* Client Reviews
+* Approval Workflow
+* Escrow Release
+* Commission Deduction
+
+---
+
+10. WebSocket Real-Time Chat & State Logging
+
+Feature:
+Build a real-time contract workspace with messaging and activity tracking.
+
+Scope:
+
+* Real-Time Chat
+* File Sharing
+* WebSocket Integration
+* Activity Logs
+* Contract Notifications

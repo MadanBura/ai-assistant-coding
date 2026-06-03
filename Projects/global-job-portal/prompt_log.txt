@@ -1,0 +1,214 @@
+name: prompt-logger
+description: 'You are a Conversation Auditor.'
+risk: safe
+source: community
+date_added: '2026-05-20'
+---
+ 
+## Use this skill when
+ 
+- Working on tasks related to prompt logger
+- Needing guidance, best practices, or generation for prompt logger
+ 
+## Do not use this skill when
+ 
+- The task is unrelated to prompt logger
+- You need a different domain or tool outside this scope
+ 
+## Instructions
+ 
+- Clarify goals, constraints, and required inputs.
+- Apply relevant best practices and validate outcomes.
+- Provide actionable steps and verification.
+ 
+**Role and Execution Details:**
+You are a Conversation Auditor. Your sole responsibility is to record every user message exactly as it is received.
+ 
+Verbatim Recording :-
+ - Capture EVERY user input exactly as entered.
+ - Preserve all formatting, including whitespace, line breaks, and special characters.
+ - Do NOT modify, clean, or normalize the text in any way.
+ 
+Storage Rules :-
+ - Store ONLY the user input.
+ - Do NOT include assistant responses.
+ - Do NOT include timestamps, metadata, or labels unless explicitly requested by the user.
+ - If the user input is empty, ignore it.
+Formatting Rules :-
+ - Each user input should be on a new line.
+ - Separate entries using a blank line.
+ 
+## Limitations
+- Use this skill only when the task clearly matches the scope described above.
+- Do not treat the output as a substitute for environment-specific validation, testing, or expert review.
+- Stop and ask for clarification if required inputs, permissions, safety boundaries, or success criteria are missing.
+- Ensure all security, privacy, and compliance guidelines are followed.
+- The instructions provided are guidelines and should be adapted to the specific context of the codebase or project.
+ 
+
+Problem Statement
+
+Build a job portal where employers can post jobs and candidates can apply, track applications, and receive AI-based job recommendations.
+
+make brd.md file for above problem statement 
+based on brd.md file create kpi file which content acceptance cretira of whole project  
+also in prd.md file all bussiness requirement detailed should be there
+thats only the task for now
+create all md file in that folder 
+
+
+based on prd.md and kpi.md list down the total 10 features which to be made
+
+
+now
+Create a production-ready Markdown feature specification file named `[feature-name].md`.
+
+firstly create one folder as a features then insert md file in it
+
+# 1. Role-Based Authentication & Registration
+
+Feature:
+Build a secure authentication system with separate Candidate and Employer onboarding flows and email verification.
+
+Scope:
+
+* Registration & Login
+* Role Selection
+* Email Verification
+* Password Management
+* Secure Authentication
+
+---
+
+# 2. Candidate Profile Management & Resume Upload
+
+Feature:
+Create a candidate dashboard for managing profiles, skills, and resume uploads.
+
+Scope:
+
+* Profile Management
+* Skill Tags
+* Resume Upload
+* PDF Validation
+* Dashboard Settings
+
+---
+
+# 3. Automated PDF Resume Parser
+
+Feature:
+Develop a resume parsing engine that extracts structured candidate information from uploaded PDFs.
+
+Scope:
+
+* PDF Processing
+* Skill Extraction
+* Work History Parsing
+* Profile Auto-Fill
+* Data Validation
+
+---
+
+# 4. Employer Company Profile Management
+
+Feature:
+Build company profile management for recruiters and hiring organizations.
+
+Scope:
+
+* Company Details
+* Industry Information
+* Company Size
+* Logo Upload
+* Public Company Profile
+
+---
+
+# 5. Job Posting CRUD System
+
+Feature:
+Enable employers to create, edit, publish, and archive job postings.
+
+Scope:
+
+* Create Jobs
+* Update Jobs
+* Archive Jobs
+* Draft Management
+* Skill & Salary Fields
+
+---
+
+# 6. Job Search & Advanced Multi-Filter Board
+
+Feature:
+Build a searchable job board with advanced filtering and discovery features.
+
+Scope:
+
+* Keyword Search
+* Location Filters
+* Salary Filters
+* Experience Filters
+* Job Type Filters
+
+---
+
+# 7. One-Click Application Engine
+
+Feature:
+Allow candidates to apply for jobs instantly using their profile and uploaded resume.
+
+Scope:
+
+* Job Applications
+* Resume Attachment
+* Duplicate Prevention
+* Application Validation
+* Submission Tracking
+
+---
+
+# 8. Interactive Kanban Applicant Pipeline
+
+Feature:
+Create a drag-and-drop recruitment pipeline for managing applicants.
+
+Scope:
+
+* Kanban Board
+* Applicant Stages
+* Drag & Drop
+* Candidate Tracking
+* Recruitment Workflow
+
+---
+
+# 9. Real-Time Status Tracking & Notifications
+
+Feature:
+Provide live application status updates with automated notifications.
+
+Scope:
+
+* Status Tracking
+* Real-Time Updates
+* Email Notifications
+* In-App Alerts
+* Activity History
+
+---
+
+# 10. Vector-Based AI Recommendation & Matching Engine
+
+Feature:
+Build an AI-powered matching engine that recommends jobs and candidates using semantic search.
+
+Scope:
+
+* Vector Search
+* Candidate Matching
+* Job Recommendations
+* Match Scoring
+* AI Similarity Analysis

@@ -1,0 +1,210 @@
+name: prompt-logger
+description: 'You are a Conversation Auditor.'
+risk: safe
+source: community
+date_added: '2026-05-20'
+---
+ 
+## Use this skill when
+ 
+- Working on tasks related to prompt logger
+- Needing guidance, best practices, or generation for prompt logger
+ 
+## Do not use this skill when
+ 
+- The task is unrelated to prompt logger
+- You need a different domain or tool outside this scope
+ 
+## Instructions
+ 
+- Clarify goals, constraints, and required inputs.
+- Apply relevant best practices and validate outcomes.
+- Provide actionable steps and verification.
+ 
+**Role and Execution Details:**
+You are a Conversation Auditor. Your sole responsibility is to record every user message exactly as it is received.
+ 
+Verbatim Recording :-
+ - Capture EVERY user input exactly as entered.
+ - Preserve all formatting, including whitespace, line breaks, and special characters.
+ - Do NOT modify, clean, or normalize the text in any way.
+ 
+Storage Rules :-
+ - Store ONLY the user input.
+ - Do NOT include assistant responses.
+ - Do NOT include timestamps, metadata, or labels unless explicitly requested by the user.
+ - If the user input is empty, ignore it.
+Formatting Rules :-
+ - Each user input should be on a new line.
+ - Separate entries using a blank line.
+ 
+## Limitations
+- Use this skill only when the task clearly matches the scope described above.
+- Do not treat the output as a substitute for environment-specific validation, testing, or expert review.
+- Stop and ask for clarification if required inputs, permissions, safety boundaries, or success criteria are missing.
+- Ensure all security, privacy, and compliance guidelines are followed.
+- The instructions provided are guidelines and should be adapted to the specific context of the codebase or project.
+
+Problem Statement
+
+Develop a project management platform similar to Jira/Trello where teams can manage projects, tasks, sprints, and team collaboration.
+
+make brd.md file for above problem statement 
+based on brd.md file create kpi file which content acceptance cretira of whole project  
+also in prd.md file all bussiness requirement detailed should be there
+thats only the task for now
+create all md file in that folder 
+
+based on prd.md and kpi.md list down the total 10 features which to be made
+
+Create a production-ready Markdown feature specification file named `[feature-name].md`.
+
+firstly create one folder as a features then insert md file in it
+
+# 1. Multi-Tenant Registration & Workspace Provisioning
+
+Feature:
+Build a multi-tenant onboarding system that creates isolated workspaces with unique workspace URLs.
+
+Scope:
+
+* User Registration
+* Workspace Creation
+* Tenant Isolation
+* Workspace Slugs
+* Organization Management
+
+---
+
+# 2. Role-Based Access Control (RBAC) System
+
+Feature:
+Implement a permission-based access control system for Owners, Members, and Viewers.
+
+Scope:
+
+* Role Management
+* Permission Controls
+* Member Access
+* Viewer Restrictions
+* Workspace Security
+
+---
+
+# 3. Project Creation & Template Management
+
+Feature:
+Create a project setup system with Scrum and Kanban templates.
+
+Scope:
+
+* Project Creation
+* Scrum Templates
+* Kanban Templates
+* Project Keys
+* Template Configuration
+
+---
+
+# 4. Interactive Kanban Board with Drag-and-Drop
+
+Feature:
+Build an interactive Kanban board for managing tasks and workflow statuses.
+
+Scope:
+
+* Drag & Drop Cards
+* Column Management
+* Status Tracking
+* Board Reordering
+* Optimistic Updates
+
+---
+
+# 5. Unified Product Backlog Planner
+
+Feature:
+Develop a backlog management system for prioritizing and organizing project work.
+
+Scope:
+
+* Backlog Management
+* Task Prioritization
+* Story Points
+* Sprint Assignment
+* Issue Tracking
+
+---
+
+# 6. Agile Sprint Lifecycle Management
+
+Feature:
+Create a sprint management module covering planning, execution, and completion workflows.
+
+Scope:
+
+* Sprint Creation
+* Sprint Scheduling
+* Active Sprint Tracking
+* Sprint Completion
+* Task Carry Forward
+
+---
+
+# 7. Rich Task/Issue Editor
+
+Feature:
+Build a detailed task editor supporting rich content, checklists, and attachments.
+
+Scope:
+
+* Markdown Editor
+* Checklists
+* File Uploads
+* Image Attachments
+* Task Details Management
+
+---
+
+# 8. WebSocket-Powered Real-Time Board Sync
+
+Feature:
+Enable real-time collaboration by synchronizing board changes across all active users.
+
+Scope:
+
+* Real-Time Updates
+* WebSocket Integration
+* Live Card Movement
+* Multi-User Collaboration
+* Instant Synchronization
+
+---
+
+# 9. Contextual Comments & @Mention Notifications
+
+Feature:
+Create a collaborative commenting system with user mentions and notifications.
+
+Scope:
+
+* Task Comments
+* Markdown Support
+* User Mentions
+* In-App Notifications
+* Email Alerts
+
+---
+
+# 10. Sprint Burndown & Velocity Dashboard
+
+Feature:
+Build an analytics dashboard for tracking sprint progress and team performance.
+
+Scope:
+
+* Burndown Charts
+* Velocity Metrics
+* Sprint Analytics
+* Project Health Tracking
+* Performance Insights

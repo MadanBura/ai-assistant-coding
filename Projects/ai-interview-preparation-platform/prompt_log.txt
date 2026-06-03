@@ -1,0 +1,212 @@
+name: prompt-logger
+description: 'You are a Conversation Auditor.'
+risk: safe
+source: community
+date_added: '2026-05-20'
+---
+ 
+## Use this skill when
+ 
+- Working on tasks related to prompt logger
+- Needing guidance, best practices, or generation for prompt logger
+ 
+## Do not use this skill when
+ 
+- The task is unrelated to prompt logger
+- You need a different domain or tool outside this scope
+ 
+## Instructions
+ 
+- Clarify goals, constraints, and required inputs.
+- Apply relevant best practices and validate outcomes.
+- Provide actionable steps and verification.
+ 
+**Role and Execution Details:**
+You are a Conversation Auditor. Your sole responsibility is to record every user message exactly as it is received.
+ 
+Verbatim Recording :-
+ - Capture EVERY user input exactly as entered.
+ - Preserve all formatting, including whitespace, line breaks, and special characters.
+ - Do NOT modify, clean, or normalize the text in any way.
+ 
+Storage Rules :-
+ - Store ONLY the user input.
+ - Do NOT include assistant responses.
+ - Do NOT include timestamps, metadata, or labels unless explicitly requested by the user.
+ - If the user input is empty, ignore it.
+Formatting Rules :-
+ - Each user input should be on a new line.
+ - Separate entries using a blank line.
+ 
+## Limitations
+- Use this skill only when the task clearly matches the scope described above.
+- Do not treat the output as a substitute for environment-specific validation, testing, or expert review.
+- Stop and ask for clarification if required inputs, permissions, safety boundaries, or success criteria are missing.
+- Ensure all security, privacy, and compliance guidelines are followed.
+- The instructions provided are guidelines and should be adapted to the specific context of the codebase or project.
+
+Problem Statement
+
+Build an AI-powered interview preparation system that helps candidates practice coding, behavioral, and technical interviews with personalized feedback.
+
+make brd.md file for above problem statement 
+based on brd.md file create kpi file which content acceptance cretira of whole project  
+also in prd.md file all bussiness requirement detailed should be there
+thats only the task for now
+create all md file in that folder 
+
+based on prd.md and kpi.md list down the total 10 features which to be made
+
+now
+Create a production-ready Markdown feature specification file named `[feature-name].md`.
+
+firstly create one folder as a features then insert md file in it
+
+# 1. User Profile & Target Role Configuration
+
+Feature:
+Build an onboarding system allowing users to register, manage profiles, and configure target roles and experience levels.
+
+Scope:
+
+* Registration & Login
+* Profile Management
+* Role Selection
+* Experience Levels
+* User Preferences
+
+---
+
+# 2. Interactive Progress & Performance Dashboard
+
+Feature:
+Build an analytics dashboard that visualizes interview preparation progress and performance metrics.
+
+Scope:
+
+* Progress Tracking
+* Score Trends
+* Session Analytics
+* Performance Charts
+* Focus Area Insights
+
+---
+
+# 3. Interactive Coding Workspace UI
+
+Feature:
+Create a coding interview workspace with problem descriptions, code editor, AI chat, and execution output.
+
+Scope:
+
+* Question Panel
+* Code Editor
+* AI Chat Sidebar
+* Console Output
+* Responsive Layout
+
+---
+
+# 4. Sandboxed Code Execution Engine
+
+Feature:
+Develop a secure code execution service supporting multiple programming languages in isolated environments.
+
+Scope:
+
+* Multi-Language Support
+* Containerized Execution
+* Memory Limits
+* Time Limits
+* Result Processing
+
+---
+
+# 5. Interactive AI Coding Interviewer
+
+Feature:
+Build an AI-powered interviewer that conducts real-time coding interviews and follow-up discussions.
+
+Scope:
+
+* AI Questioning
+* Streaming Responses
+* Follow-Up Questions
+* Context Retention
+* Interview Simulation
+
+---
+
+# 6. Contextual Hint Generator
+
+Feature:
+Provide intelligent hints by analyzing the user's current code without revealing solutions.
+
+Scope:
+
+* Code Analysis
+* Hint Generation
+* Progressive Guidance
+* Context Awareness
+* Solution Protection
+
+---
+
+# 7. Speech-to-Text Behavioral Interface
+
+Feature:
+Enable voice-based responses for behavioral and conceptual interview practice.
+
+Scope:
+
+* Voice Input
+* Speech Recognition
+* Transcript Generation
+* Browser Integration
+* Real-Time Conversion
+
+---
+
+# 8. STAR Framework Evaluation Engine
+
+Feature:
+Analyze behavioral answers using the STAR methodology and identify missing components.
+
+Scope:
+
+* STAR Detection
+* Response Scoring
+* Gap Analysis
+* Feedback Generation
+* Improvement Suggestions
+
+---
+
+# 9. Multi-Turn Technical/System Design Simulator
+
+Feature:
+Create an AI-driven system design interview simulator with contextual multi-round discussions.
+
+Scope:
+
+* AI Personas
+* Design Interviews
+* Context Memory
+* Multi-Turn Conversations
+* Technical Evaluation
+
+---
+
+# 10. Automated Scorecard & Study Roadmap Generator
+
+Feature:
+Generate interview feedback reports, coding evaluations, and personalized study plans.
+
+Scope:
+
+* Interview Scoring
+* Skill Assessment
+* Code Review
+* Learning Roadmap
+* Study Recommendations
+

@@ -1,0 +1,162 @@
+name: prompt-logger
+description: 'You are a Conversation Auditor.'
+risk: safe
+source: community
+date_added: '2026-05-20'
+---
+ 
+## Use this skill when
+ 
+- Working on tasks related to prompt logger
+- Needing guidance, best practices, or generation for prompt logger
+ 
+## Do not use this skill when
+ 
+- The task is unrelated to prompt logger
+- You need a different domain or tool outside this scope
+ 
+## Instructions
+ 
+- Clarify goals, constraints, and required inputs.
+- Apply relevant best practices and validate outcomes.
+- Provide actionable steps and verification.
+ 
+**Role and Execution Details:**
+You are a Conversation Auditor. Your sole responsibility is to record every user message exactly as it is received.
+ 
+Verbatim Recording :-
+ - Capture EVERY user input exactly as entered.
+ - Preserve all formatting, including whitespace, line breaks, and special characters.
+ - Do NOT modify, clean, or normalize the text in any way.
+ 
+Storage Rules :-
+ - Store ONLY the user input.
+ - Do NOT include assistant responses.
+ - Do NOT include timestamps, metadata, or labels unless explicitly requested by the user.
+ - If the user input is empty, ignore it.
+Formatting Rules :-
+ - Each user input should be on a new line.
+ - Separate entries using a blank line.
+ 
+## Limitations
+- Use this skill only when the task clearly matches the scope described above.
+- Do not treat the output as a substitute for environment-specific validation, testing, or expert review.
+- Stop and ask for clarification if required inputs, permissions, safety boundaries, or success criteria are missing.
+- Ensure all security, privacy, and compliance guidelines are followed.
+- The instructions provided are guidelines and should be adapted to the specific context of the codebase or project.
+
+Problem Statement
+
+Build a platform where developers can discover, save, organize, copy, and share high-quality prompts for coding, debugging, testing, deployment, and productivity.
+
+make brd.md file for above problem statement 
+based on brd.md file create kpi file which content acceptance cretira of whole project  
+also in prd.md file all bussiness requirement detailed should be there
+thats only the task for now
+create all md file in that folder 
+
+
+
+based on prd.md and kpi.md list down the total 10 features which to be made
+
+
+
+now
+Create a production-ready Markdown feature specification file named `[feature-name].md`.
+firstly create one folder as a features then insert md file in it
+
+Feature1: 
+Build a rich markdown editor for creating, editing, and previewing prompts with syntax highlighting, autosave, and responsive UI.
+
+Scope:   Markdown support , Live preview ,Syntax highlighting , Autosave , Responsive design
+
+
+
+for feature 2 : Build a parser that automatically detects variables in {{variable_name}} format and extracts them for dynamic prompt generation.
+
+Scope:
+Variable detection
+Parameter extraction
+Validation
+Duplicate handling
+Error reporting
+
+
+
+similary for every feture need md file 
+i will share all feature and scope respectively
+
+Feature3: Generate dynamic input fields from parsed variables and display a real-time compiled prompt preview.
+Scope:
+Dynamic forms
+Live updates
+Variable binding
+Prompt compilation
+Real-time preview
+
+Feature4 : Build a searchable prompt library with advanced filtering and sorting capabilities.
+
+Scope:
+Full-text search
+Category filters
+LLM filters
+Author filters
+Sorting & pagination
+
+Feature 5: Allow users to copy compiled prompts instantly with visual confirmation.
+
+Scope:
+Clipboard API
+Copy button
+Success toast
+Error handling
+Mobile support
+
+Feature 6: Create a hierarchical folder system for organizing prompts into playbooks and collections.
+
+Scope:
+Create folders
+Rename folders
+Delete folders
+Drag & drop organization
+Nested hierarchy
+
+Feature 7 : Implement visibility controls allowing users to manage public, unlisted, and private prompt access.
+
+Scope:
+Public visibility
+Unlisted sharing
+Private access
+Ownership controls
+Permission management
+
+Feature 8: Enable users to fork public prompts while maintaining attribution and version lineage.
+
+Scope:
+
+Fork prompt
+Lineage tracking
+Creator attribution
+Version history
+Ownership transfer
+
+Feature 9:
+Build a community feedback system with ratings and threaded discussions.
+
+Scope:
+
+1–5 star ratings
+One vote per user
+Comment threads
+Replies
+Moderation support
+
+Feature 10: Implement security scanning to detect and prevent accidental exposure of secrets and sensitive information.
+
+Scope:
+
+API key detection
+Password detection
+Secret scanning
+Input sanitization
+Security warnings

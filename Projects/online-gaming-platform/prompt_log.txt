@@ -1,0 +1,137 @@
+name: prompt-logger
+description: 'You are a Conversation Auditor.'
+risk: safe
+source: community
+date_added: '2026-05-20'
+---
+ 
+## Use this skill when
+ 
+- Working on tasks related to prompt logger
+- Needing guidance, best practices, or generation for prompt logger
+ 
+## Do not use this skill when
+ 
+- The task is unrelated to prompt logger
+- You need a different domain or tool outside this scope
+ 
+## Instructions
+ 
+- Clarify goals, constraints, and required inputs.
+- Apply relevant best practices and validate outcomes.
+- Provide actionable steps and verification.
+ 
+**Role and Execution Details:**
+You are a Conversation Auditor. Your sole responsibility is to record every user message exactly as it is received.
+ 
+Verbatim Recording :-
+ - Capture EVERY user input exactly as entered.
+ - Preserve all formatting, including whitespace, line breaks, and special characters.
+ - Do NOT modify, clean, or normalize the text in any way.
+ 
+Storage Rules :-
+ - Store ONLY the user input.
+ - Do NOT include assistant responses.
+ - Do NOT include timestamps, metadata, or labels unless explicitly requested by the user.
+ - If the user input is empty, ignore it.
+Formatting Rules :-
+ - Each user input should be on a new line.
+ - Separate entries using a blank line.
+ 
+## Limitations
+- Use this skill only when the task clearly matches the scope described above.
+- Do not treat the output as a substitute for environment-specific validation, testing, or expert review.
+- Stop and ask for clarification if required inputs, permissions, safety boundaries, or success criteria are missing.
+- Ensure all security, privacy, and compliance guidelines are followed.
+- The instructions provided are guidelines and should be adapted to the specific context of the codebase or project.
+
+Problem Statment:
+Build a scalable online gaming platform where users worldwide can register, play multiplayer games, track scores, join tournaments, chat with friends, and compete on leaderboards.
+
+make brd.md file for above problem statement 
+make kpi.md file in which all end to end feature will be there 
+also in prd.md file all bussiness requirement in detailed format 
+thats only the task for now
+create all md file in that folder 
+
+continue
+
+based on brd.md file create kpi file which content acceptance cretira of whole project  
+
+based on prd.md and kpi.md list down the total 10 features to be made 
+
+Create a production-ready Markdown feature specification file named `[feature-name].md`.
+
+firstly create one folder as a features then insert md file in it
+Feature: User Registration & Security Module (Auth Service)
+
+Scope:
+Email/password registration and login
+Google OAuth
+Discord OAuth
+Apple OAuth
+Steam OAuth
+JWT access tokens
+Refresh token rotation
+Authentication and authorization
+
+Include:
+
+* Overview
+* User Stories
+* Functional Requirements
+* API Endpoints
+* Database Schema
+* Security Requirements
+* Validation Rules
+* Error Handling
+* Acceptance Criteria
+* Edge Cases
+
+Output only valid Markdown.
+
+like wise i need for 2nd feature 
+Feature: Global Player Profile & Dashboard
+
+Scope:
+User profiles, unique usernames, avatars, region settings, player statistics, win/loss history, progression tracking.
+
+for 3rd feature :Authoritative Game Lobbies
+
+Scope:
+Public/private lobby creation, game rules configuration, password protection, invite links, lobby management.
+
+4) Feature: Skill-Based Matchmaking Engine
+
+Scope:
+MMR-based matchmaking, regional matching, queue balancing, fair player pairing.
+
+5) Feature: Dynamic Queue & MMR Expansion
+
+Scope:
+Queue monitoring, wait-time tracking, automatic MMR threshold expansion every 5 seconds after 15 seconds.
+
+6) Feature: Tournament Bracket Generator
+
+Scope:
+Tournament registration, single elimination, double elimination, round robin, bracket creation and visualization.
+
+7) Feature: Automated Tournament Progression
+
+Scope:
+Match result processing, automatic winner advancement, loser elimination, bracket updates.
+
+8) Feature: Friends & Presence Directory
+
+Scope:
+Friend requests, accept/decline/block actions, online status, in-game presence, idle tracking.
+
+9) Feature: WebSocket Chat Cluster
+
+Scope:
+Direct messaging, channel chat, lobby chat, real-time communication, profanity filtering.
+
+10) Feature: Real-Time Leaderboard System
+
+Scope:
+Redis sorted-set rankings, regional leaderboards, game mode rankings, daily, weekly, all-time leaderboards.
