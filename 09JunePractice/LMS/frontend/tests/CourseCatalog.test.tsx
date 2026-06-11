@@ -130,6 +130,9 @@ describe('CourseCatalog Component Integration Tests', () => {
     expect(btn).toHaveTextContent(/enrolling/i);
 
     resolveRequest({ ok: true, json: async () => ({ success: true }) });
+    await waitFor(() => {
+      expect(btn).not.toHaveTextContent(/enrolling/i);
+    });
   });
 
   // Test 8: Anonymous user enrollment click redirects to Login

@@ -148,6 +148,9 @@ describe('InstructorDashboard Component Integration Tests', () => {
     expect(screen.getByText(/loading analytics/i)).toBeInTheDocument();
 
     resolveRequest({ ok: true, json: async () => ({ success: true, data: mockAnalytics }) });
+    await waitFor(() => {
+      expect(screen.queryByText(/loading analytics/i)).not.toBeInTheDocument();
+    });
   });
 
   // Test 7: Analytics API error banner

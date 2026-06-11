@@ -133,8 +133,23 @@ const validateProfileUpdate = (req, res, next) => {
   next();
 };
 
+const validateQuizSubmit = (req, res, next) => {
+  if (!req.body || !req.body.answers || !Array.isArray(req.body.answers)) {
+    return next(new AppError('Answers are required.', 400));
+  }
+
+  for (const ans of req.body.answers) {
+    if (!ans.questionId || ans.selectedOptionIndex === undefined) {
+      return next(new AppError('Each answer must have a questionId and selectedOptionIndex.', 400));
+    }
+  }
+
+  next();
+};
+
 module.exports = {
   validateRegister,
   validateLogin,
-  validateProfileUpdate
+  validateProfileUpdate,
+  validateQuizSubmit
 };

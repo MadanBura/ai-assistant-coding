@@ -204,6 +204,9 @@ describe('CourseBuilder Component Integration Tests', () => {
     expect(screen.getByText(/saving order/i)).toBeInTheDocument();
 
     resolveRequest({ ok: true, json: async () => ({ success: true }) });
+    await waitFor(() => {
+      expect(saveBtn).not.toHaveTextContent(/saving order/i);
+    });
   });
 
   // Test 10: Reorder error rollback state
