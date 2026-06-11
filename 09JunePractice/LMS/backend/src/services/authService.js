@@ -9,7 +9,8 @@ const registerUser = async ({ name, email, password, role }) => {
     throw new AppError('Email already in use.', 400);
   }
 
-  const user = await User.create({ name, email, password, role });
+  const user = new User({ name, email, password, role });
+  await user.save();
 
   return {
     id: user._id.toString(),

@@ -2,36 +2,36 @@
 
 | Test ID | Module | Feature | Test File | Test Name | Status | Priority | Last Updated | Remarks |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| BE-01-01-001 | User Onboarding & Auth | User Registration | backend/tests/auth/register.test.js | Should register a new learner successfully with status 201 | Fail | High | 2026-06-11 | Initial test spec |
-| BE-01-01-002 | User Onboarding & Auth | User Registration | backend/tests/auth/register.test.js | Should register a new instructor successfully with status 201 | Fail | High | 2026-06-11 | Initial test spec |
-| BE-01-01-003 | User Onboarding & Auth | User Registration | backend/tests/auth/register.test.js | Should fail registration if name field is missing with status 400 | Fail | High | 2026-06-11 | Initial test spec |
-| BE-01-01-004 | User Onboarding & Auth | User Registration | backend/tests/auth/register.test.js | Should fail if the email is already registered with status 400 | Fail | High | 2026-06-11 | Initial test spec |
-| BE-01-01-005 | User Onboarding & Auth | User Registration | backend/tests/auth/register.test.js | Should fail if the email format is invalid with status 400 | Fail | High | 2026-06-11 | Initial test spec |
-| BE-01-01-006 | User Onboarding & Auth | User Registration | backend/tests/auth/register.test.js | Should fail if the password is under 8 characters with status 400 | Fail | High | 2026-06-11 | Initial test spec |
-| BE-01-01-007 | User Onboarding & Auth | User Registration | backend/tests/auth/register.test.js | Should fail if role is not Learner or Instructor with status 400 | Fail | High | 2026-06-11 | Initial test spec |
-| BE-01-01-008 | User Onboarding & Auth | User Registration | backend/tests/auth/register.test.js | Should fail if request body is empty with status 400 | Fail | High | 2026-06-11 | Initial test spec |
-| BE-01-01-009 | User Onboarding & Auth | User Registration | backend/tests/auth/register.test.js | Should sanitize email parameter to prevent NoSQL operator injection | Fail | High | 2026-06-11 | Initial test spec |
-| BE-01-01-010 | User Onboarding & Auth | User Registration | backend/tests/auth/register.test.js | Should return 500 if the database save operation fails | Fail | High | 2026-06-11 | Initial test spec |
-| BE-01-02-001 | User Onboarding & Auth | User Login | backend/tests/auth/login.test.js | Should login successfully with valid credentials returning token and 200 | Fail | High | 2026-06-11 | Initial test spec |
-| BE-01-02-002 | User Onboarding & Auth | User Login | backend/tests/auth/login.test.js | Should fail login if email is not registered with status 410 | Fail | High | 2026-06-11 | Initial test spec |
-| BE-01-02-003 | User Onboarding & Auth | User Login | backend/tests/auth/login.test.js | Should fail login if password is incorrect with status 410 | Fail | High | 2026-06-11 | Initial test spec |
-| BE-01-02-004 | User Onboarding & Auth | User Login | backend/tests/auth/login.test.js | Should fail if email parameter is missing with status 400 | Fail | High | 2026-06-11 | Initial test spec |
-| BE-01-02-005 | User Onboarding & Auth | User Login | backend/tests/auth/login.test.js | Should fail if password parameter is missing with status 400 | Fail | High | 2026-06-11 | Initial test spec |
-| BE-01-02-006 | User Onboarding & Auth | User Login | backend/tests/auth/login.test.js | The returned JWT should contain correct user ID and role | Fail | High | 2026-06-11 | Initial test spec |
-| BE-01-02-007 | User Onboarding & Auth | User Login | backend/tests/auth/login.test.js | Should reject login requests attempting NoSQL operator queries in email | Fail | High | 2026-06-11 | Initial test spec |
-| BE-01-02-008 | User Onboarding & Auth | User Login | backend/tests/auth/login.test.js | Should fail on empty request payload with status 400 | Fail | High | 2026-06-11 | Initial test spec |
-| BE-01-02-009 | User Onboarding & Auth | User Login | backend/tests/auth/login.test.js | Should reject expired JWT tokens with status 401 | Fail | High | 2026-06-11 | Initial test spec |
-| BE-01-02-010 | User Onboarding & Auth | User Login | backend/tests/auth/login.test.js | Should return status 500 if server throws an internal error during credentials lookup | Fail | High | 2026-06-11 | Initial test spec |
-| BE-01-03-001 | User Onboarding & Auth | User Profile Management | backend/tests/auth/profile.test.js | Should retrieve user profile details with a valid token and status 200 | Fail | High | 2026-06-11 | Initial test spec |
-| BE-01-03-002 | User Onboarding & Auth | User Profile Management | backend/tests/auth/profile.test.js | Should reject GET profile if Authorization header is missing with status 401 | Fail | High | 2026-06-11 | Initial test spec |
-| BE-01-03-003 | User Onboarding & Auth | User Profile Management | backend/tests/auth/profile.test.js | Should reject GET profile if token format is invalid with status 401 | Fail | High | 2026-06-11 | Initial test spec |
-| BE-01-03-004 | User Onboarding & Auth | User Profile Management | backend/tests/auth/profile.test.js | Should update name and email successfully and return status 200 | Fail | High | 2026-06-11 | Initial test spec |
-| BE-01-03-005 | User Onboarding & Auth | User Profile Management | backend/tests/auth/profile.test.js | Should fail profile update if email matches another existing user with status 400 | Fail | High | 2026-06-11 | Initial test spec |
-| BE-01-03-006 | User Onboarding & Auth | User Profile Management | backend/tests/auth/profile.test.js | Should prevent role elevation modification attempts with status 403 | Fail | High | 2026-06-11 | Initial test spec |
-| BE-01-03-007 | User Onboarding & Auth | User Profile Management | backend/tests/auth/profile.test.js | Should reject profile update if email format is invalid with status 400 | Fail | High | 2026-06-11 | Initial test spec |
-| BE-01-03-008 | User Onboarding & Auth | User Profile Management | backend/tests/auth/profile.test.js | Should reject PUT profile if Authorization header is missing with status 401 | Fail | High | 2026-06-11 | Initial test spec |
-| BE-01-03-009 | User Onboarding & Auth | User Profile Management | backend/tests/auth/profile.test.js | Should respond with status 200 and return original data on empty payload | Fail | High | 2026-06-11 | Initial test spec |
-| BE-01-03-010 | User Onboarding & Auth | User Profile Management | backend/tests/auth/profile.test.js | Should return status 500 if DB update operation fails | Fail | High | 2026-06-11 | Initial test spec |
+| BE-01-01-001 | User Onboarding & Auth | User Registration | backend/tests/auth/register.test.js | Should register a new learner successfully with status 201 | Pass | High | 2026-06-11 | Passed |
+| BE-01-01-002 | User Onboarding & Auth | User Registration | backend/tests/auth/register.test.js | Should register a new instructor successfully with status 201 | Pass | High | 2026-06-11 | Passed |
+| BE-01-01-003 | User Onboarding & Auth | User Registration | backend/tests/auth/register.test.js | Should fail registration if name field is missing with status 400 | Pass | High | 2026-06-11 | Passed |
+| BE-01-01-004 | User Onboarding & Auth | User Registration | backend/tests/auth/register.test.js | Should fail if the email is already registered with status 400 | Pass | High | 2026-06-11 | Passed |
+| BE-01-01-005 | User Onboarding & Auth | User Registration | backend/tests/auth/register.test.js | Should fail if the email format is invalid with status 400 | Pass | High | 2026-06-11 | Passed |
+| BE-01-01-006 | User Onboarding & Auth | User Registration | backend/tests/auth/register.test.js | Should fail if the password is under 8 characters with status 400 | Pass | High | 2026-06-11 | Passed |
+| BE-01-01-007 | User Onboarding & Auth | User Registration | backend/tests/auth/register.test.js | Should fail if role is not Learner or Instructor with status 400 | Pass | High | 2026-06-11 | Passed |
+| BE-01-01-008 | User Onboarding & Auth | User Registration | backend/tests/auth/register.test.js | Should fail if request body is empty with status 400 | Pass | High | 2026-06-11 | Passed |
+| BE-01-01-009 | User Onboarding & Auth | User Registration | backend/tests/auth/register.test.js | Should sanitize email parameter to prevent NoSQL operator injection | Pass | High | 2026-06-11 | Passed |
+| BE-01-01-010 | User Onboarding & Auth | User Registration | backend/tests/auth/register.test.js | Should return 500 if the database save operation fails | Pass | High | 2026-06-11 | Passed |
+| BE-01-02-001 | User Onboarding & Auth | User Login | backend/tests/auth/login.test.js | Should login successfully with valid credentials returning token and 200 | Pass | High | 2026-06-11 | Passed |
+| BE-01-02-002 | User Onboarding & Auth | User Login | backend/tests/auth/login.test.js | Should fail login if email is not registered with status 410 | Pass | High | 2026-06-11 | Passed |
+| BE-01-02-003 | User Onboarding & Auth | User Login | backend/tests/auth/login.test.js | Should fail login if password is incorrect with status 410 | Pass | High | 2026-06-11 | Passed |
+| BE-01-02-004 | User Onboarding & Auth | User Login | backend/tests/auth/login.test.js | Should fail if email parameter is missing with status 400 | Pass | High | 2026-06-11 | Passed |
+| BE-01-02-005 | User Onboarding & Auth | User Login | backend/tests/auth/login.test.js | Should fail if password parameter is missing with status 400 | Pass | High | 2026-06-11 | Passed |
+| BE-01-02-006 | User Onboarding & Auth | User Login | backend/tests/auth/login.test.js | The returned JWT should contain correct user ID and role | Pass | High | 2026-06-11 | Passed |
+| BE-01-02-007 | User Onboarding & Auth | User Login | backend/tests/auth/login.test.js | Should reject login requests attempting NoSQL operator queries in email | Pass | High | 2026-06-11 | Passed |
+| BE-01-02-008 | User Onboarding & Auth | User Login | backend/tests/auth/login.test.js | Should fail on empty request payload with status 400 | Pass | High | 2026-06-11 | Passed |
+| BE-01-02-009 | User Onboarding & Auth | User Login | backend/tests/auth/login.test.js | Should reject expired JWT tokens with status 401 | Pass | High | 2026-06-11 | Passed |
+| BE-01-02-010 | User Onboarding & Auth | User Login | backend/tests/auth/login.test.js | Should return status 500 if server throws an internal error during credentials lookup | Pass | High | 2026-06-11 | Passed |
+| BE-01-03-001 | User Onboarding & Auth | User Profile Management | backend/tests/auth/profile.test.js | Should retrieve user profile details with a valid token and status 200 | Pass | High | 2026-06-11 | Passed |
+| BE-01-03-002 | User Onboarding & Auth | User Profile Management | backend/tests/auth/profile.test.js | Should reject GET profile if Authorization header is missing with status 401 | Pass | High | 2026-06-11 | Passed |
+| BE-01-03-003 | User Onboarding & Auth | User Profile Management | backend/tests/auth/profile.test.js | Should reject GET profile if token format is invalid with status 401 | Pass | High | 2026-06-11 | Passed |
+| BE-01-03-004 | User Onboarding & Auth | User Profile Management | backend/tests/auth/profile.test.js | Should update name and email successfully and return status 200 | Pass | High | 2026-06-11 | Passed |
+| BE-01-03-005 | User Onboarding & Auth | User Profile Management | backend/tests/auth/profile.test.js | Should fail profile update if email matches another existing user with status 400 | Pass | High | 2026-06-11 | Passed |
+| BE-01-03-006 | User Onboarding & Auth | User Profile Management | backend/tests/auth/profile.test.js | Should prevent role elevation modification attempts with status 403 | Pass | High | 2026-06-11 | Passed |
+| BE-01-03-007 | User Onboarding & Auth | User Profile Management | backend/tests/auth/profile.test.js | Should reject profile update if email format is invalid with status 400 | Pass | High | 2026-06-11 | Passed |
+| BE-01-03-008 | User Onboarding & Auth | User Profile Management | backend/tests/auth/profile.test.js | Should reject PUT profile if Authorization header is missing with status 401 | Pass | High | 2026-06-11 | Passed |
+| BE-01-03-009 | User Onboarding & Auth | User Profile Management | backend/tests/auth/profile.test.js | Should respond with status 200 and return original data on empty payload | Pass | High | 2026-06-11 | Passed |
+| BE-01-03-010 | User Onboarding & Auth | User Profile Management | backend/tests/auth/profile.test.js | Should return status 500 if DB update operation fails | Pass | High | 2026-06-11 | Passed |
 | BE-02-01-001 | Course & Curriculum | Course Creation | backend/tests/course/course.test.js | Should create a course successfully as an Instructor with status 201 | Fail | High | 2026-06-11 | Initial test spec |
 | BE-02-01-002 | Course & Curriculum | Course Creation | backend/tests/course/course.test.js | Should block course creation for Learners with status 403 | Fail | High | 2026-06-11 | Initial test spec |
 | BE-02-01-003 | Course & Curriculum | Course Creation | backend/tests/course/course.test.js | Should reject course creation if required fields are missing with status 400 | Fail | High | 2026-06-11 | Initial test spec |
@@ -132,3 +132,9 @@
 | BE-06-01-008 | Progress & Analytics | Instructor Analytics | backend/tests/analytics/analytics.test.js | Average quiz score calculation should output correct score average | Fail | High | 2026-06-11 | Initial test spec |
 | BE-06-01-009 | Progress & Analytics | Instructor Analytics | backend/tests/analytics/analytics.test.js | Should return status 404 if requested course ID does not exist | Fail | High | 2026-06-11 | Initial test spec |
 | BE-06-01-010 | Progress & Analytics | Instructor Analytics | backend/tests/analytics/analytics.test.js | Should return status 500 if aggregation pipeline throws an execution error | Fail | High | 2026-06-11 | Initial test spec |
+
+## Passed Testcases
+The following test cases for the User Onboarding and Authentication module are passing:
+- BE-01-01-001 to BE-01-01-010 (User Registration)
+- BE-01-02-001 to BE-01-02-010 (User Login)
+- BE-01-03-001 to BE-01-03-010 (User Profile Management)
