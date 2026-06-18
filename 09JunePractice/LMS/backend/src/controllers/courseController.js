@@ -72,6 +72,30 @@ const addModule = async (req, res, next) => {
   }
 };
 
+const updateModule = async (req, res, next) => {
+  try {
+    const moduleObj = await courseService.updateModule(req.params.moduleId, req.body, req.user.id);
+    res.status(200).json({
+      success: true,
+      data: moduleObj
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const deleteModule = async (req, res, next) => {
+  try {
+    await courseService.deleteModule(req.params.moduleId, req.user.id);
+    res.status(200).json({
+      success: true,
+      message: 'Module deleted successfully.'
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 const addTopic = async (req, res, next) => {
   try {
     const topic = await courseService.addTopic(req.params.moduleId, req.body, req.user.id);
@@ -127,6 +151,8 @@ module.exports = {
   updateCourse,
   deleteCourse,
   addModule,
+  updateModule,
+  deleteModule,
   addTopic,
   reorderModules,
   addResource,

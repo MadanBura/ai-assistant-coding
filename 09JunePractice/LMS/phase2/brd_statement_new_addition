@@ -1,0 +1,27 @@
+Problem Statement
+
+The existing Learning Management System (LMS) lacks advanced communication, assessment, engagement, and learner support features that are essential for improving the teaching and learning experience. The objective is to enhance the platform by implementing the following modules:
+
+1. Unified Course Announcement System
+Develop a centralized announcement management system for instructors.
+Enable instructors to create rich-text announcements and categorize them by priority levels (Info, Warning, Urgent).
+Implement a notification center for learners to receive course updates.
+Display urgent announcements as prominent alert banners on course overview pages.
+2. Assignment Grading & Feedback Portal
+Allow instructors to create assignments within course topics, define deadlines, configure grading rubrics, and upload reference materials.
+Build a grading dashboard for reviewing submissions, assigning scores, providing feedback, and uploading evaluated files.
+Enable students to submit assignments through topic-specific upload interfaces.
+Create a gradebook section where learners can view scores, instructor feedback, and evaluated documents.
+3. Topic-Specific Q&A and Doubt Resolver
+Introduce a discussion and doubt-resolution system linked to individual course topics.
+Provide instructors with a dashboard to monitor unresolved questions across courses.
+Enable instructors to answer questions, pin official responses, and bookmark frequently asked queries.
+Allow students to submit doubts directly from lesson pages and search previously answered questions within the topic.
+4. Interactive Quiz Feedback & Explanations
+Enhance the quiz module to support detailed explanations for each answer option.
+Allow instructors to configure explanation visibility rules based on quiz completion or score thresholds.
+Provide learners with an interactive review screen displaying explanations for incorrect responses after quiz submission.
+5. Gamification and Custom Badge System
+Implement a customizable achievement and badge framework.
+Enable instructors to create badges based on course completion, assessment performance, or other milestones.
+Automatically award badges based on predefined criteria and display achievements on student profiles and dashboards.

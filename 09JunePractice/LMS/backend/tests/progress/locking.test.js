@@ -7,6 +7,7 @@ const Course = require('../../src/models/Course');
 const Module = require('../../src/models/Module');
 const Topic = require('../../src/models/Topic');
 const Progress = require('../../src/models/Progress');
+const FinalExam = require('../../src/models/FinalExam');
 
 describe('Feature 3.3: Sequential Access & Locking System', () => {
   let learnerToken;
@@ -91,6 +92,18 @@ describe('Feature 3.3: Sequential Access & Locking System', () => {
       courseId: courseId,
       progressPercent: 0,
       completedTopics: []
+    });
+
+    await FinalExam.create({
+      courseId: courseId,
+      passingThreshold: 75,
+      questions: [
+        {
+          questionText: "What is 2+2?",
+          options: ["3", "4", "5"],
+          correctOptionIndex: 1
+        }
+      ]
     });
   });
 

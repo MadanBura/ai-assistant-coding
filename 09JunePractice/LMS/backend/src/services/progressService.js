@@ -1,13 +1,15 @@
+const mongoose = require('mongoose');
 const Course = require('../models/Course');
-const Module = require('../models/Module');
 const Topic = require('../models/Topic');
+const Module = require('../models/Module');
+const AppError = require('../utils/AppError');
+const gamificationService = require('./gamificationService');
 const Resource = require('../models/Resource');
 const Progress = require('../models/Progress');
 const Quiz = require('../models/Quiz');
 const QuizAttempt = require('../models/QuizAttempt');
 const FinalExam = require('../models/FinalExam');
 const FinalExamAttempt = require('../models/FinalExamAttempt');
-const AppError = require('../utils/AppError');
 
 const getSortedCourseTopics = async (courseId) => {
   const modules = await Module.find({ courseId }).sort({ sequenceIndex: 1 });
@@ -309,6 +311,15 @@ const getFinalExam = async (courseId, userId) => {
     throw new AppError('No final exam configured for this course', 404);
   }
 
+  // Check 24-hour lockout
+  const recentAttempt = await FinalExamAttempt.findOne({ userId, courseId }).sort({ createdAt: -1 });
+  if (recentAttempt && !recentAttempt.passed) {
+    const hoursSinceLastAttempt = (Date.now() - new Date(recentAttempt.createdAt).getTime()) / (1000 * 60 * 60);
+    if (hoursSinceLastAttempt < 24) {
+      throw new AppError(`You recently failed the exam. Please prepare and re-attempt after 24 hours.`, 403);
+    }
+  }
+
   return {
     passingThreshold: exam.passingThreshold,
     questions: exam.questions.map((q, idx) => ({
@@ -335,39 +346,73 @@ const submitFinalExam = async (courseId, answers, userId) => {
     throw new AppError('Final exam is locked until all curriculum topics are completed.', 403);
   }
 
-  const exam = await FinalExam.findOne({ courseId });
-  if (!exam) {
-    throw new AppError('No final exam configured for this course', 404);
-  }
+  const session = await mongoose.startSession();
+  session.startTransaction();
 
-  // Grade the exam
-  let correctCount = 0;
-  exam.questions.forEach((q, idx) => {
-    const expectedId = exam._id.toString() + '_q' + idx;
-    const answer = answers.find(a => a.questionId === expectedId || a.questionId === q._id.toString());
-    if (answer && answer.selectedOptionIndex === q.correctOptionIndex) {
-      correctCount++;
+  try {
+    const exam = await FinalExam.findOne({ courseId }).session(session);
+    if (!exam) {
+      progress.finalExamPassed = true;
+      await progress.save({ session });
+      await gamificationService.evaluateCourseCompletionBadge(userId, courseId, progress.progressPercent, session).catch(console.error);
+      
+      await session.commitTransaction();
+      session.endSession();
+      
+      return {
+        score: 100,
+        passed: true,
+        passingThreshold: 0,
+        certificateEligible: true
+      };
     }
-  });
 
-  const score = Math.round((correctCount / exam.questions.length) * 100);
-  const passed = score >= exam.passingThreshold;
+    // Check 24-hour lockout for submissions too to prevent concurrent submissions
+    const recentAttempt = await FinalExamAttempt.findOne({ userId, courseId }).sort({ createdAt: -1 }).session(session);
+    if (recentAttempt && !recentAttempt.passed) {
+      const hoursSinceLastAttempt = (Date.now() - new Date(recentAttempt.createdAt).getTime()) / (1000 * 60 * 60);
+      if (hoursSinceLastAttempt < 24) {
+        throw new AppError(`You recently failed the exam. Please prepare and re-attempt after 24 hours.`, 403);
+      }
+    }
 
-  // Log the attempt
-  const attempt = new FinalExamAttempt({ userId, courseId, score, passed });
-  await attempt.save();
+    // Grade the exam
+    let correctCount = 0;
+    exam.questions.forEach((q, idx) => {
+      const expectedId = exam._id.toString() + '_q' + idx;
+      const answer = answers.find(a => a.questionId === expectedId || a.questionId === q._id.toString());
+      if (answer && answer.selectedOptionIndex === q.correctOptionIndex) {
+        correctCount++;
+      }
+    });
 
-  if (passed) {
-    progress.finalExamPassed = true;
-    await progress.save();
+    const score = Math.round((correctCount / exam.questions.length) * 100);
+    const passed = score >= exam.passingThreshold;
+
+    // Log the attempt
+    const attempt = new FinalExamAttempt({ userId, courseId, score, passed });
+    await attempt.save({ session });
+
+    if (passed) {
+      progress.finalExamPassed = true;
+      await progress.save({ session });
+      await gamificationService.evaluateCourseCompletionBadge(userId, courseId, progress.progressPercent, session).catch(console.error);
+    }
+
+    await session.commitTransaction();
+    session.endSession();
+
+    return {
+      score,
+      passed,
+      passingThreshold: exam.passingThreshold,
+      certificateEligible: passed
+    };
+  } catch (err) {
+    await session.abortTransaction();
+    session.endSession();
+    throw err;
   }
-
-  return {
-    score,
-    passed,
-    passingThreshold: exam.passingThreshold,
-    certificateEligible: passed
-  };
 };
 
 const getEnrolledCourses = async (userId) => {

@@ -3,6 +3,8 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useProgress } from '../../context/ProgressContext';
 import Sidebar from '../../components/common/Sidebar';
+import CourseAnnouncements from '../../components/Course/CourseAnnouncements';
+import CourseAssignments from '../../components/Course/CourseAssignments';
 
 export default function CourseDetails() {
   const { courseId } = useParams();
@@ -24,6 +26,7 @@ export default function CourseDetails() {
   const [loading, setLoading] = useState(true);
   const [activeAccordion, setActiveAccordion] = useState(0); // first item open by default
   const [isEnrolling, setIsEnrolling] = useState(false);
+  const [selectedTopicIdForAssignment, setSelectedTopicIdForAssignment] = useState(null);
 
   // Fallback / Mock Data matching Stitch "Mastering WebGL"
   const defaultCourseDetails = {
@@ -75,13 +78,20 @@ export default function CourseDetails() {
           const result = await response.json();
           if (result.success && result.data) {
             // Merge backend data with default styling structure
-            setCourse({
+            const mergedCourse = {
               ...defaultCourseDetails,
               ...result.data,
               modules: result.data.modules && result.data.modules.length > 0 ? result.data.modules : defaultCourseDetails.modules,
               description: result.data.description || defaultCourseDetails.description,
               title: result.data.title || defaultCourseDetails.title
-            });
+            };
+            setCourse(mergedCourse);
+
+            const firstModule = mergedCourse.modules?.[0];
+            const firstTopic = firstModule?.topics?.[0];
+            if (firstTopic) {
+              setSelectedTopicIdForAssignment(firstTopic.id || firstTopic._id);
+            }
           } else {
             setCourse(defaultCourseDetails);
           }
@@ -296,6 +306,17 @@ export default function CourseDetails() {
                   </div>
                 </div>
 
+                {(isEnrolled || user?.role === 'Instructor') && (
+                  <CourseAnnouncements courseId={courseId} user={user} token={token} />
+                )}
+
+                {(isEnrolled || user?.role === 'Instructor') && selectedTopicIdForAssignment && (
+                  <div className="mb-4">
+                    <p className="text-secondary small mb-1">Showing assignment for selected topic. Click any topic in the syllabus to change.</p>
+                    <CourseAssignments topicId={selectedTopicIdForAssignment} user={user} />
+                  </div>
+                )}
+
                 {/* Modules syllabus list */}
                 <h3 className="h5 fw-bold mb-3">Curriculum Syllabus</h3>
                 <div className="d-flex flex-column gap-3 mb-5">
@@ -325,17 +346,32 @@ export default function CourseDetails() {
                       {activeAccordion === idx && (
                         <div className="border-top p-4 bg-light bg-opacity-50">
                           <div className="d-flex flex-column gap-2">
-                            {mod.topics && mod.topics.map((topic, tIdx) => (
-                              <div key={topic.id || tIdx} className="d-flex justify-content-between align-items-center p-3 bg-white rounded-2 border">
-                                <div className="d-flex align-items-center gap-2 small">
-                                  <span className="material-symbols-outlined text-secondary fs-5">
-                                    {topic.type === 'quiz' ? 'quiz' : 'description'}
-                                  </span>
-                                  <span className="fw-medium text-dark">{topic.title}</span>
+                            {mod.topics && mod.topics.map((topic, tIdx) => {
+                              const tId = topic.id || topic._id;
+                              const isSelected = selectedTopicIdForAssignment === tId;
+                              return (
+                                <div 
+                                  key={tId || tIdx} 
+                                  className={`d-flex justify-content-between align-items-center p-3 rounded-2 border ${
+                                    isSelected ? 'border-primary bg-primary-subtle bg-opacity-10' : 'bg-white'
+                                  }`}
+                                  onClick={() => {
+                                    if (isEnrolled || user?.role === 'Instructor') {
+                                      setSelectedTopicIdForAssignment(tId);
+                                    }
+                                  }}
+                                  style={{ cursor: (isEnrolled || user?.role === 'Instructor') ? 'pointer' : 'default' }}
+                                >
+                                  <div className="d-flex align-items-center gap-2 small">
+                                    <span className={`material-symbols-outlined fs-5 ${isSelected ? 'text-primary' : 'text-secondary'}`}>
+                                      {topic.type === 'quiz' ? 'quiz' : 'description'}
+                                    </span>
+                                    <span className={`fw-medium ${isSelected ? 'text-primary fw-bold' : 'text-dark'}`}>{topic.title}</span>
+                                  </div>
+                                  <span className="text-secondary small" style={{ fontSize: '11px' }}>{topic.type === 'quiz' ? 'Required Assessment' : 'Notes Resource'}</span>
                                 </div>
-                                <span className="text-secondary small" style={{ fontSize: '11px' }}>{topic.type === 'quiz' ? 'Required Assessment' : 'Notes Resource'}</span>
-                              </div>
-                            ))}
+                              );
+                            })}
                           </div>
                         </div>
                       )}

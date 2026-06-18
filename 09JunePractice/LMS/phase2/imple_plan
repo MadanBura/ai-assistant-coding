@@ -1,0 +1,154 @@
+# Implement Remaining Phase 2 LMS Modules (MOD-02, MOD-03, MOD-04, MOD-05)
+
+This plan details the implementation of all remaining Phase 2 LMS modules. We will construct Mongoose schemas, Express routes, controller layers, frontend React components, and write full test assertions to turn all failing baseline tests into PASS.
+
+## User Review Required
+
+> [!IMPORTANT]
+> The existing `Quiz` model will be modified to support Phase 2 `releaseRule` configuration and per-question `explanation` rationales.
+> All new database schemas (e.g., `Assignment`, `Submission`, `Doubt`, `Badge`, `UserBadge`) will align with the Mongoose + Express modular architecture guidelines.
+> File uploads (assignments submission and grading) will utilize Multer with buffer checking and validation bounds constraints.
+
+## Open Questions
+
+None at this stage. We have direct specifications for all validation rules, status codes, and user journeys.
+
+---
+
+## Proposed Changes
+
+### Component 1: MOD-02 Assignment Grading & Feedback Portal
+
+#### [NEW] [Assignment.js](file:///Users/apple/ai-assistant-coding/09JunePractice/LMS/backend/src/models/Assignment.js)
+- Define `Assignment` schema containing `topicId`, `title`, `description`, `maxScore`, `dueDate`, and `referenceFileUrl`.
+
+#### [NEW] [Submission.js](file:///Users/apple/ai-assistant-coding/09JunePractice/LMS/backend/src/models/Submission.js)
+- Define `Submission` schema containing `assignmentId`, `studentId`, `submittedFileUrl`, `status`, `grade`, `feedback`, and `feedbackFileUrl`.
+
+#### [NEW] [assignmentRoutes.js](file:///Users/apple/ai-assistant-coding/09JunePractice/LMS/backend/src/routes/assignmentRoutes.js)
+- Router mapping for:
+  - `POST /api/assignments` (create assignment)
+  - `POST /api/assignments/:id/submit` (submit file)
+  - `POST /api/submissions/:id/grade` (grade submission)
+
+#### [NEW] [assignmentController.js](file:///Users/apple/ai-assistant-coding/09JunePractice/LMS/backend/src/controllers/assignmentController.js)
+- Controller handoffs implementing ownership checks, validation bounds, sequential topic checks, and Multer file upload handling.
+
+#### [NEW] [assignmentService.js](file:///Users/apple/ai-assistant-coding/09JunePractice/LMS/backend/src/services/assignmentService.js)
+- Core service layer to manage DB reads/writes for assignments and student submissions.
+
+#### [NEW] [assignments.test.js](file:///Users/apple/ai-assistant-coding/09JunePractice/LMS/backend/tests/phase2/assignments.test.js)
+- Replace mock tests with real Supertest calls for assignment creation, submission, and grading.
+
+---
+
+### Component 2: MOD-03 Topic-Specific Q&A & Doubt Resolver
+
+#### [NEW] [Doubt.js](file:///Users/apple/ai-assistant-coding/09JunePractice/LMS/backend/src/models/Doubt.js)
+- Define `Doubt` schema containing `topicId`, `studentId`, `question`, `answers` (repliedBy, content, isOfficial, createdAt), and `isResolved`.
+
+#### [NEW] [doubtRoutes.js](file:///Users/apple/ai-assistant-coding/09JunePractice/LMS/backend/src/routes/doubtRoutes.js)
+- Router mapping for:
+  - `POST /api/doubts` (post doubt)
+  - `POST /api/doubts/:id/answers` (reply/resolve thread)
+  - `GET /api/doubts` (retrieve thread list)
+
+#### [NEW] [doubtController.js](file:///Users/apple/ai-assistant-coding/09JunePractice/LMS/backend/src/controllers/doubtController.js)
+- Controller handoffs for doubt posting, replying, official answer pinning, and filtering by lock state.
+
+#### [NEW] [doubtService.js](file:///Users/apple/ai-assistant-coding/09JunePractice/LMS/backend/src/services/doubtService.js)
+- Core service layer to post doubts, push replies, flag official answers, and sort official answers first.
+
+#### [NEW] [doubts.test.js](file:///Users/apple/ai-assistant-coding/09JunePractice/LMS/backend/tests/phase2/doubts.test.js)
+- Replace mock tests with real Supertest assertions for doubt drawer posting, replying, and privilege validations.
+
+---
+
+### Component 3: MOD-04 Interactive Quiz Feedback & Explanations
+
+#### [MODIFY] [Quiz.js](file:///Users/apple/ai-assistant-coding/09JunePractice/LMS/backend/src/models/Quiz.js)
+- Update schema:
+  - Add `releaseRule` (Enum: `['Always', 'OnPassing', 'AfterDeadline']`, default `'Always'`).
+  - Add `explanation` field inside the `questions` list schema.
+
+#### [NEW] [quizFeedbackRoutes.js](file:///Users/apple/ai-assistant-coding/09JunePractice/LMS/backend/src/routes/quizFeedbackRoutes.js)
+- Router mapping for:
+  - `POST /api/quiz-feedback/setup` (configure quiz rationalize)
+  - `POST /api/quiz-feedback/submit` (evaluate and return explanations based on releaseRule)
+
+#### [NEW] [quizFeedbackController.js](file:///Users/apple/ai-assistant-coding/09JunePractice/LMS/backend/src/controllers/quizFeedbackController.js)
+- Controller handoffs to manage quiz setup and attempt review logic.
+
+#### [NEW] [quizFeedbackService.js](file:///Users/apple/ai-assistant-coding/09JunePractice/LMS/backend/src/services/quizFeedbackService.js)
+- Core service layer enforcing release rules (`Always`, `OnPassing`, `AfterDeadline`) and scrubbing rationales when rules are not met.
+
+#### [NEW] [quizFeedback.test.js](file:///Users/apple/ai-assistant-coding/09JunePractice/LMS/backend/tests/phase2/quizFeedback.test.js)
+- Replace mock tests with real Supertest assertions checking explanation masks.
+
+---
+
+### Component 4: MOD-05 Gamification and Custom Badges
+
+#### [NEW] [Badge.js](file:///Users/apple/ai-assistant-coding/09JunePractice/LMS/backend/src/models/Badge.js)
+- Define `Badge` schema containing `courseId`, `title`, `description`, `iconUrl`, and `triggerType`.
+
+#### [NEW] [UserBadge.js](file:///Users/apple/ai-assistant-coding/09JunePractice/LMS/backend/src/models/UserBadge.js)
+- Define `UserBadge` schema mapping `userId` and `badgeId` uniquely to hold student milestone completion records.
+
+#### [NEW] [gamificationRoutes.js](file:///Users/apple/ai-assistant-coding/09JunePractice/LMS/backend/src/routes/gamificationRoutes.js)
+- Router mapping for:
+  - `POST /api/gamification/badges` (create badge template)
+  - `GET /api/gamification/badges` (retrieve student badge gallery)
+
+#### [NEW] [gamificationController.js](file:///Users/apple/ai-assistant-coding/09JunePractice/LMS/backend/src/controllers/gamificationController.js)
+- Controller mapping for design creation and user achievement displays.
+
+#### [NEW] [gamificationService.js](file:///Users/apple/ai-assistant-coding/09JunePractice/LMS/backend/src/services/gamificationService.js)
+- Service layer handling badge definitions, asynchronous achievement unlocks, and list lookups.
+
+#### [NEW] [gamification.test.js](file:///Users/apple/ai-assistant-coding/09JunePractice/LMS/backend/tests/phase2/gamification.test.js)
+- Replace mock tests with real Supertest assertions checking custom badge milestones.
+
+---
+
+### Component 5: Route Wiring & Validation Middleware
+
+#### [MODIFY] [validator.js](file:///Users/apple/ai-assistant-coding/09JunePractice/LMS/backend/src/middlewares/validator.js)
+- Add payload sanitizers and validators for:
+  - Assignment creation & grading
+  - Doubt submissions
+  - Quiz rationals configurations
+  - Badge template variables
+
+#### [MODIFY] [index.js](file:///Users/apple/ai-assistant-coding/09JunePractice/LMS/backend/src/routes/index.js)
+- Wire assignment, doubt, quizFeedback, and gamification routers to mount correctly under the `/api` prefix.
+
+---
+
+### Component 6: Frontend Custom Components and Pages
+
+#### [NEW] [CourseAssignments.jsx](file:///Users/apple/ai-assistant-coding/09JunePractice/LMS/frontend/src/components/Course/CourseAssignments.jsx)
+- React component managing assignment view, submission files upload form, and grading/comments display.
+
+#### [NEW] [CourseDoubts.jsx](file:///Users/apple/ai-assistant-coding/09JunePractice/LMS/frontend/src/components/Course/CourseDoubts.jsx)
+- React component for Doubt Drawer beside lesson notes to view, search, submit, and answer doubts.
+
+#### [NEW] [BadgeGallery.jsx](file:///Users/apple/ai-assistant-coding/09JunePractice/LMS/frontend/src/components/Profile/BadgeGallery.jsx)
+- React component to render a learner's unlocked achievements on their Profile screen.
+
+#### [MODIFY] [CourseViewer.jsx](file:///Users/apple/ai-assistant-coding/09JunePractice/LMS/frontend/src/pages/Course/CourseViewer.jsx)
+- Integrate doubt drawers and assignments display into active lesson player tabs.
+
+---
+
+## Verification Plan
+
+### Automated Tests
+Run Jest tests to verify all test suites pass successfully:
+```bash
+npm test backend/tests/phase2/
+```
+
+### Manual Verification
+- Deploy local dev servers and verify file attachment upload sizes and constraints.
+- Click through learner dashboards to check visual badge popup triggers.

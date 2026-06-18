@@ -15,6 +15,15 @@ const quizSchema = new mongoose.Schema({
     min: 0,
     max: 100
   },
+  releaseRule: {
+    type: String,
+    required: [true, 'Release rule is required'],
+    enum: {
+      values: ['Always', 'OnPassing', 'AfterDeadline'],
+      message: '{VALUE} is not a valid release rule'
+    },
+    default: 'Always'
+  },
   questions: [{
     questionText: {
       type: String,
@@ -29,8 +38,13 @@ const quizSchema = new mongoose.Schema({
       type: Number,
       required: [true, 'Correct option index is required'],
       min: 0
+    },
+    explanation: {
+      type: String,
+      trim: true
     }
   }]
 }, { timestamps: true });
 
 module.exports = mongoose.model('Quiz', quizSchema);
+

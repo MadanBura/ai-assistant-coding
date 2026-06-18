@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Link, useParams, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { getUserBadges } from '../../services/gamificationService';
 
 const DEFAULT_COURSE_DATA = {
   id: 'c-default',
@@ -39,27 +40,36 @@ export default function CourseCompletion({
 
   const [courseData, setCourseData] = useState(null);
   const [downloading, setDownloading] = useState(false);
+  const [awardedBadges, setAwardedBadges] = useState([]);
 
   const examResult = location.state?.result;
   const finalScoreString = examResult ? `${examResult.score}%` : '95%';
 
   useEffect(() => {
-    const fetchCourse = async () => {
+    const fetchCourseAndBadges = async () => {
       try {
-        const res = await fetch(`/courses/${courseId}`, {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        if (res.ok) {
-          const result = await res.json();
+        const [courseRes, badgesRes] = await Promise.all([
+          fetch(`/courses/${courseId}`, { headers: { 'Authorization': `Bearer ${token}` } }).catch(() => null),
+          getUserBadges().catch(() => ({ data: [] }))
+        ]);
+
+        if (courseRes?.ok) {
+          const result = await courseRes.json();
           if (result.success && result.data) {
             setCourseData(result.data);
           }
+        }
+        
+        // Filter badges to show only those awarded for this course
+        if (badgesRes?.data) {
+          const courseBadges = badgesRes.data.filter(b => b.badgeId && b.badgeId.courseId === courseId);
+          setAwardedBadges(courseBadges);
         }
       } catch (err) {
         console.error(err);
       }
     };
-    if (courseId) fetchCourse();
+    if (courseId) fetchCourseAndBadges();
   }, [courseId, token]);
 
   const activeCourse = useMemo(() => {
@@ -366,6 +376,31 @@ export default function CourseCompletion({
                 </div>
               </div>
             </section>
+
+            {/* Earned Badges Section */}
+            {awardedBadges.length > 0 && (
+              <section className="card-premium bg-white p-4">
+                <h2 className="h6 fw-bold mb-4 text-dark d-flex align-items-center gap-2">
+                  <span className="material-symbols-outlined text-warning" style={{ fontVariationSettings: "'FILL' 1" }}>military_tech</span>
+                  Earned Badges
+                </h2>
+                <div className="d-flex flex-wrap gap-3">
+                  {awardedBadges.map((ub, idx) => (
+                    <div key={idx} className="text-center d-flex flex-column align-items-center" style={{ width: '80px' }}>
+                      <div className="rounded-circle d-flex align-items-center justify-content-center shadow-sm mb-2" 
+                           style={{ width: '56px', height: '56px', background: 'var(--primary-light)' }}>
+                        {ub.badgeId.iconUrl && ub.badgeId.iconUrl.startsWith('http') ? (
+                          <img src={ub.badgeId.iconUrl} alt="Badge Icon" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} />
+                        ) : (
+                          <span className="fs-1">{ub.badgeId.iconUrl || '🏆'}</span>
+                        )}
+                      </div>
+                      <span className="small fw-semibold text-dark" style={{ fontSize: '10px', lineHeight: '1.2' }}>{ub.badgeId.title}</span>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
 
             {/* Actions list */}
             <div className="d-flex flex-column gap-2">

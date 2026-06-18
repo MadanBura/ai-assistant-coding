@@ -3,6 +3,10 @@ import { Link, useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { useProgress } from '../../context/ProgressContext';
 import { useAuth } from '../../context/AuthContext';
+import CourseAnnouncements from '../../components/Course/CourseAnnouncements';
+import CourseAssignments from '../../components/Course/CourseAssignments';
+import CourseDoubts from '../../components/Course/CourseDoubts';
+import QuizFeedbackPanel from '../../components/Course/QuizFeedbackPanel';
 
 /**
  * Helper Sub-component: QuizBoard
@@ -449,7 +453,8 @@ export default function CourseViewer({
       });
 
       if (!response.ok) {
-        throw new Error('Exam submission failed');
+        const errResult = await response.json().catch(() => ({}));
+        throw new Error(errResult.message || 'Exam submission failed');
       }
 
       const result = await response.json();
@@ -911,7 +916,7 @@ export default function CourseViewer({
                   <h1 className="h4 fw-bold text-dark mb-4">{activeTopic.title}</h1>
 
                   {/* Tabs */}
-                  <div className="d-flex border-bottom gap-4 mb-4" style={{ borderBottomColor: 'var(--border-color) !important' }}>
+                  <div className="d-flex border-bottom gap-4 mb-4 overflow-x-auto flex-nowrap" style={{ borderBottomColor: 'var(--border-color) !important', whiteSpace: 'nowrap' }}>
                     <button
                       type="button"
                       className={`tab-btn ${activeTab === 'notes' ? 'active' : ''}`}
@@ -933,7 +938,61 @@ export default function CourseViewer({
                     >
                       References
                     </button>
+                    <button
+                      type="button"
+                      className={`tab-btn ${activeTab === 'announcements' ? 'active' : ''}`}
+                      onClick={() => setActiveTab('announcements')}
+                    >
+                      Announcements
+                    </button>
+                    <button
+                      type="button"
+                      className={`tab-btn ${activeTab === 'assignments' ? 'active' : ''}`}
+                      onClick={() => setActiveTab('assignments')}
+                    >
+                      Assignments
+                    </button>
+                    <button
+                      type="button"
+                      className={`tab-btn ${activeTab === 'doubts' ? 'active' : ''}`}
+                      onClick={() => setActiveTab('doubts')}
+                    >
+                      Doubts & Q&A
+                    </button>
+                    <button
+                      type="button"
+                      className={`tab-btn ${activeTab === 'quiz-feedback' ? 'active' : ''}`}
+                      onClick={() => setActiveTab('quiz-feedback')}
+                    >
+                      Quiz Feedback
+                    </button>
                   </div>
+
+                  {activeTab === 'announcements' && (
+                    <CourseAnnouncements courseId={courseId} user={authUser} />
+                  )}
+
+                  {activeTab === 'assignments' && (
+                    <CourseAssignments
+                      topicId={activeTopic?.id || activeTopic?._id}
+                      user={authUser}
+                    />
+                  )}
+
+                  {activeTab === 'doubts' && (
+                    <CourseDoubts
+                      topicId={activeTopic?.id || activeTopic?._id}
+                      user={authUser}
+                    />
+                  )}
+
+                  {activeTab === 'quiz-feedback' && (
+                    <QuizFeedbackPanel
+                      topicId={activeTopic?.id || activeTopic?._id}
+                      user={authUser}
+                      assessment={activeTopic?.assessment}
+                    />
+                  )}
 
                   {activeTab === 'notes' && (
                     <div className="notes-content">

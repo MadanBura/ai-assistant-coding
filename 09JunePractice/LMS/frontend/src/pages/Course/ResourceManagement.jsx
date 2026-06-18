@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Sidebar from '../../components/common/Sidebar';
+import CourseAssignments from '../../components/Course/CourseAssignments';
+import CourseDoubts from '../../components/Course/CourseDoubts';
+import QuizFeedbackPanel from '../../components/Course/QuizFeedbackPanel';
+import { useAuth } from '../../context/AuthContext';
 
 export default function ResourceManagement() {
   const { courseId, topicId } = useParams();
@@ -8,6 +12,13 @@ export default function ResourceManagement() {
   const [topic, setTopic] = useState(null);
   const [resources, setResources] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [activeTab, setActiveTab] = useState('resources'); // resources, assignments, doubts, quiz-feedback
+
+  let authUser = null;
+  try {
+    const auth = useAuth();
+    authUser = auth.user;
+  } catch(e) {}
 
   // New Resource Form
   const [type, setType] = useState('Video');
@@ -151,66 +162,140 @@ export default function ResourceManagement() {
               <h2 className="h4 fw-bold mb-1">Resource Management</h2>
               <p className="text-secondary mb-0">Manage materials for topic: <strong className="text-dark">{topic.title}</strong></p>
             </div>
+            {activeTab === 'resources' && (
+              <button
+                type="button"
+                className="btn-premium-primary py-2.5 px-4"
+                onClick={() => setShowModal(true)}
+              >
+                <span className="material-symbols-outlined fs-5">cloud_upload</span>
+                <span>Add Resource</span>
+              </button>
+            )}
+          </div>
+
+          {/* Tabs */}
+          <div className="d-flex border-bottom gap-4 mb-4 overflow-x-auto flex-nowrap" style={{ borderBottomColor: 'var(--border-color) !important', whiteSpace: 'nowrap' }}>
             <button
               type="button"
-              className="btn-premium-primary py-2.5 px-4"
-              onClick={() => setShowModal(true)}
+              className={`tab-btn ${activeTab === 'resources' ? 'active' : ''}`}
+              onClick={() => setActiveTab('resources')}
+              style={{
+                background: 'none', border: 'none', padding: '12px 0', fontWeight: '600',
+                color: activeTab === 'resources' ? 'var(--primary)' : 'var(--text-secondary)',
+                borderBottom: `2px solid ${activeTab === 'resources' ? 'var(--primary)' : 'transparent'}`,
+                transition: 'var(--transition-fast)'
+              }}
             >
-              <span className="material-symbols-outlined fs-5">cloud_upload</span>
-              <span>Add Resource</span>
+              Resources
+            </button>
+            <button
+              type="button"
+              className={`tab-btn ${activeTab === 'assignments' ? 'active' : ''}`}
+              onClick={() => setActiveTab('assignments')}
+              style={{
+                background: 'none', border: 'none', padding: '12px 0', fontWeight: '600',
+                color: activeTab === 'assignments' ? 'var(--primary)' : 'var(--text-secondary)',
+                borderBottom: `2px solid ${activeTab === 'assignments' ? 'var(--primary)' : 'transparent'}`,
+                transition: 'var(--transition-fast)'
+              }}
+            >
+              Assignments
+            </button>
+            <button
+              type="button"
+              className={`tab-btn ${activeTab === 'doubts' ? 'active' : ''}`}
+              onClick={() => setActiveTab('doubts')}
+              style={{
+                background: 'none', border: 'none', padding: '12px 0', fontWeight: '600',
+                color: activeTab === 'doubts' ? 'var(--primary)' : 'var(--text-secondary)',
+                borderBottom: `2px solid ${activeTab === 'doubts' ? 'var(--primary)' : 'transparent'}`,
+                transition: 'var(--transition-fast)'
+              }}
+            >
+              Doubts & Q&A
+            </button>
+            <button
+              type="button"
+              className={`tab-btn ${activeTab === 'quiz-feedback' ? 'active' : ''}`}
+              onClick={() => setActiveTab('quiz-feedback')}
+              style={{
+                background: 'none', border: 'none', padding: '12px 0', fontWeight: '600',
+                color: activeTab === 'quiz-feedback' ? 'var(--primary)' : 'var(--text-secondary)',
+                borderBottom: `2px solid ${activeTab === 'quiz-feedback' ? 'var(--primary)' : 'transparent'}`,
+                transition: 'var(--transition-fast)'
+              }}
+            >
+              Quiz Feedback
             </button>
           </div>
 
-          {successMsg && <div className="alert alert-success border-0 rounded-3 small" role="alert">{successMsg}</div>}
+          {activeTab === 'resources' && (
+            <>
+              {successMsg && <div className="alert alert-success border-0 rounded-3 small" role="alert">{successMsg}</div>}
 
-          {/* Resources List */}
-          <div className="card-premium bg-white p-4">
-            <h3 className="h6 fw-bold text-dark mb-4">Topic Resources</h3>
-            {resources.length === 0 ? (
-              <div className="text-center py-5">
-                <p className="text-secondary mb-0">No resources configured for this topic yet.</p>
-              </div>
-            ) : (
-              <div className="table-responsive">
-                <table className="table-premium">
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Type</th>
-                      <th>Details</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {resources.map((r) => {
-                      const rId = r.id || r._id;
-                      return (
-                        <tr key={rId}>
-                          <td>
-                            <div className="d-flex align-items-center gap-3">
-                              <div className="rounded bg-primary bg-opacity-10 text-primary p-2 d-flex align-items-center justify-content-center">
-                                <span className="material-symbols-outlined">
-                                  {r.type === 'Video' ? 'play_circle' : 'description'}
-                                </span>
-                              </div>
-                              <span className="fw-semibold text-dark">{r.type === 'Video' ? 'Video Lecture' : 'Study Notes'}</span>
-                            </div>
-                          </td>
-                          <td>
-                            <span className="badge-premium badge-premium-primary">{r.type}</span>
-                          </td>
-                          <td>
-                            <span className="text-secondary small text-truncate d-inline-block" style={{ maxWidth: '300px' }}>
-                              {r.type === 'Video' ? r.url : r.content?.substring(0, 80)}
-                            </span>
-                          </td>
+              {/* Resources List */}
+              <div className="card-premium bg-white p-4">
+                <h3 className="h6 fw-bold text-dark mb-4">Topic Resources</h3>
+                {resources.length === 0 ? (
+                  <div className="text-center py-5">
+                    <p className="text-secondary mb-0">No resources configured for this topic yet.</p>
+                  </div>
+                ) : (
+                  <div className="table-responsive">
+                    <table className="table-premium">
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Type</th>
+                          <th>Details</th>
                         </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
+                      </thead>
+                      <tbody>
+                        {resources.map((r) => {
+                          const rId = r.id || r._id;
+                          return (
+                            <tr key={rId}>
+                              <td>
+                                <div className="d-flex align-items-center gap-3">
+                                  <div className="rounded bg-primary bg-opacity-10 text-primary p-2 d-flex align-items-center justify-content-center">
+                                    <span className="material-symbols-outlined">
+                                      {r.type === 'Video' ? 'play_circle' : 'description'}
+                                    </span>
+                                  </div>
+                                  <span className="fw-semibold text-dark">{r.type === 'Video' ? 'Video Lecture' : 'Study Notes'}</span>
+                                </div>
+                              </td>
+                              <td>
+                                <span className="badge-premium badge-premium-primary">{r.type}</span>
+                              </td>
+                              <td>
+                                <span className="text-secondary small text-truncate d-inline-block" style={{ maxWidth: '300px' }}>
+                                  {r.type === 'Video' ? r.url : r.content?.substring(0, 80)}
+                                </span>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
+            </>
+          )}
+
+          {activeTab === 'assignments' && (
+            <CourseAssignments topicId={topic?.id || topic?._id} user={authUser} />
+          )}
+
+          {activeTab === 'doubts' && (
+            <CourseDoubts topicId={topic?.id || topic?._id} user={authUser} />
+          )}
+
+          {activeTab === 'quiz-feedback' && (
+            <QuizFeedbackPanel topicId={topic?.id || topic?._id} user={authUser} />
+          )}
         </div>
       </main>
 

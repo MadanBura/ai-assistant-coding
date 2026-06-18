@@ -166,6 +166,37 @@ const addModule = async (courseId, { title, sequenceIndex }, instructorId) => {
     sequenceIndex: mod.sequenceIndex
   };
 };
+const updateModule = async (moduleId, { title }, instructorId) => {
+  if (!title) {
+    throw new AppError('Title is required.', 400);
+  }
+  await checkModuleOwnership(moduleId, instructorId);
+
+  const mod = await Module.findByIdAndUpdate(
+    moduleId,
+    { $set: { title } },
+    { new: true, runValidators: true }
+  );
+
+  return {
+    id: mod._id.toString(),
+    courseId: mod.courseId.toString(),
+    title: mod.title,
+    sequenceIndex: mod.sequenceIndex
+  };
+};
+
+const deleteModule = async (moduleId, instructorId) => {
+  await checkModuleOwnership(moduleId, instructorId);
+
+  await Module.findByIdAndDelete(moduleId);
+
+  const topics = await Topic.find({ moduleId });
+  const topicIds = topics.map(t => t._id);
+  await Topic.deleteMany({ moduleId });
+
+  await Resource.deleteMany({ topicId: { $in: topicIds } });
+};
 
 const addTopic = async (moduleId, { title, sequenceIndex }, instructorId) => {
   if (!title || sequenceIndex === undefined) {
@@ -273,8 +304,15 @@ module.exports = {
   updateCourse,
   deleteCourse,
   addModule,
+  updateModule,
+  deleteModule,
   addTopic,
   reorderModules,
   addResource,
-  updateResource
+  updateResource,
+  checkCourseOwnership,
+  checkModuleOwnership,
+  checkTopicOwnership,
+  checkResourceOwnership
 };
+

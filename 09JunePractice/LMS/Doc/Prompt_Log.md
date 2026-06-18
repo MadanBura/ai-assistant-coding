@@ -999,3 +999,146 @@ yes i want to run
 ````text
 run all testcases module wise and maintained log also
 ````
+
+---
+
+## PROMPT 21 — Execute Prompt Logger Skill
+
+**Output File:** `Doc/Prompt_Log.md`
+
+---
+
+### Prompt Content (Verbatim)
+
+````text
+/Users/apple/.gemini/config/skills/prompt-logger.md execute this file for this session and maintain logs
+````
+
+---
+
+## PROMPT 22 — Fix Infinite Loop on Course Curriculum Page
+
+**Output File:** `frontend/`
+
+---
+
+### Prompt Content (Verbatim)
+
+````text
+I am working on a project that was largely developed using AI-assisted coding.
+
+Tech stack:
+
+* Frontend: React + Bootstrap
+* Backend: Node.js + Express
+* Database: (inspect and identify from the codebase)
+
+Issue:
+On the Instructor side, when I open the Course Curriculum page and try to add or manage course modules, the frontend starts calling the course details API continuously in a loop.
+
+Affected API:
+GET /api/courses/:courseId
+
+Example logs:
+
+GET /api/courses/6a2fa893484f990a90ffb2d6 200
+GET /api/courses/6a2fa893484f990a90ffb2d6 200
+GET /api/courses/6a2fa893484f990a90ffb2d6 200
+...repeats indefinitely
+
+Expected behavior:
+
+* Course details API should be called only when necessary:
+
+  * Initial page load
+  * Manual refresh
+  * After successful curriculum/module updates
+* API should not continuously refetch in a loop.
+
+Tasks:
+
+1. Perform a root-cause analysis.
+2. Trace the complete flow from React component → hooks → context/store → API service layer.
+3. Identify why repeated renders or repeated API calls are occurring.
+4. Look specifically for:
+
+   * useEffect dependency issues
+   * State updates triggering re-renders
+   * Infinite render loops
+   * Context/provider updates
+   * React Query/SWR refetch settings (if used)
+   * Redux dispatch loops (if used)
+   * Parent-child component re-render cycles
+   * setState calls inside useEffect causing dependency changes
+   * Memoization issues
+   * Missing useCallback/useMemo where required
+5. Identify the exact file(s) and line(s) causing the issue.
+6. Explain the root cause in detail.
+7. Provide the minimal safe fix.
+8. Ensure the fix does not break:
+
+   * Course creation
+   * Course editing
+   * Curriculum management
+   * Module creation
+   * Lesson creation
+9. Search the entire codebase for similar patterns that may create additional API call loops.
+10. Generate a report with:
+
+    * Root cause
+    * Impact
+    * Files affected
+    * Code changes required
+    * Verification steps
+
+Important:
+Do not make assumptions. Inspect the actual code flow and identify the precise source of the repeated GET /api/courses/:courseId requests before proposing changes.
+````
+
+---
+
+## PROMPT 23 — Add screen to see and edit Modules in the course
+
+**Output File:** `frontend/src/pages/Course/`
+
+---
+
+### Prompt Content (Verbatim)
+
+````text
+Add one screen/page to see and edit Modules in the course
+````
+
+---
+
+## PROMPT 24 — Create Global Module Management Page
+
+**Output File:** `frontend/src/pages/Course/GlobalModuleManagement.jsx` (and Sidebar updates)
+
+---
+
+### Prompt Content (Verbatim)
+
+````text
+make this on seperate on sidebar create module 
+click on that will show exisiting course 
+select course and add modules 
+will reflect on dropdown of course on this page
+````
+
+---
+
+## PROMPT 25 — Document the New Global Module Management Feature
+
+**Output File:** `Doc/feature_new_added.md`
+
+---
+
+### Prompt Content (Verbatim)
+
+````text
+now add one .md file for this new Feature added for this what we this feature doing 
+feature_new_added.md
+````
+
+---

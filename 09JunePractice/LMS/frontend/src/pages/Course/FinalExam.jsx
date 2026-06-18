@@ -27,6 +27,7 @@ export default function FinalExam() {
   const [currentIdx, setCurrentIdx] = useState(0);
   const [timeLeft, setTimeLeft] = useState(120 * 60); // 120 minutes in seconds
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isMock, setIsMock] = useState(false);
 
   // Fallback Mock Questions if backend doesn't have it
   const defaultQuestions = [
@@ -71,18 +72,26 @@ export default function FinalExam() {
         });
         if (response.ok) {
           const result = await response.json();
-          if (result.success && result.data && result.data.questions) {
+          if (result.success && result.data && result.data.questions && result.data.questions.length > 0) {
             setQuestions(result.data.questions);
             setPassingThreshold(result.data.passingThreshold || 85);
+            setIsMock(false);
           } else {
             setQuestions(defaultQuestions);
+            setIsMock(true);
           }
         } else {
+          const errResult = await response.json().catch(() => ({}));
+          if (response.status === 403) {
+            setError(errResult.message || 'You are locked out of the exam.');
+            return; // Don't load mock questions
+          }
           setQuestions(defaultQuestions);
+          setIsMock(true);
         }
       } catch (err) {
         console.error('Failed to fetch final exam:', err);
-        setQuestions(defaultQuestions);
+        setError(`Connection Error: ${err.message || 'Unknown network error'}`);
       } finally {
         setLoading(false);
       }
@@ -130,7 +139,11 @@ export default function FinalExam() {
         body: JSON.stringify({ answers: formattedAnswers })
       });
 
-      if (!response.ok) throw new Error('Submission failed');
+      if (!response.ok) {
+        const errResult = await response.json().catch(() => ({}));
+        throw new Error(errResult.message || 'Submission failed');
+      }
+      
       const result = await response.json();
 
       if (result.success) {
@@ -141,14 +154,15 @@ export default function FinalExam() {
           // Navigate to final exam results page (CourseCompletion.jsx)
           navigate(`/course/${courseId}/completion`, { state: { result } });
         } else {
-          alert(`You scored ${result.score}%, which is below the passing threshold of ${passingThreshold}%. Please review the materials and try again.`);
+          alert(`You scored ${result.score}%. Marks are too low. Kindly prepare and re-attempt exam after 24hrs.`);
+          navigate(`/course/${courseId}`); // Kick them out to course page
         }
       } else {
         throw new Error(result.message || 'Exam submit failed');
       }
     } catch (err) {
       console.error(err);
-      alert('Failed to submit exam. Please try again.');
+      alert('Failed to submit exam: ' + err.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -165,6 +179,19 @@ export default function FinalExam() {
       <div className="d-flex justify-content-center align-items-center min-vh-100" style={{ backgroundColor: 'var(--bg-neutral)' }}>
         <div className="spinner-border text-primary" role="status">
           <span className="visually-hidden">Loading Exam Questions...</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="d-flex justify-content-center align-items-center min-vh-100" style={{ backgroundColor: 'var(--bg-neutral)' }}>
+        <div className="card-premium p-5 text-center" style={{ maxWidth: '500px' }}>
+          <span className="material-symbols-outlined text-danger mb-3" style={{ fontSize: '48px' }}>lock</span>
+          <h3 className="h5 fw-bold text-dark mb-3">Exam Locked</h3>
+          <p className="text-secondary mb-4">{error}</p>
+          <Link to={`/course/${courseId}`} className="btn-premium-primary">Return to Course</Link>
         </div>
       </div>
     );

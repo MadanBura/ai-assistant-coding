@@ -239,6 +239,14 @@ export default function CourseManagement() {
                             <button
                               type="button"
                               className="btn btn-link text-secondary p-1"
+                              title="Announcements"
+                              onClick={() => navigate(`/instructor/courses/${cId}/announcements`)}
+                            >
+                              <span className="material-symbols-outlined fs-5">campaign</span>
+                            </button>
+                            <button
+                              type="button"
+                              className="btn btn-link text-secondary p-1"
                               title="Edit Curriculum"
                               onClick={() => navigate(`/instructor/courses/${cId}/curriculum`)}
                             >

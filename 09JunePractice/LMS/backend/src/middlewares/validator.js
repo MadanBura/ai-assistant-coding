@@ -147,9 +147,195 @@ const validateQuizSubmit = (req, res, next) => {
   next();
 };
 
+const validateAnnouncementCreate = (req, res, next) => {
+  const courseId = req.body.courseId || req.params.id;
+  const { title, content, priority } = req.body;
+
+  if (!courseId || !title || !content || !priority) {
+    return next(new AppError('Title, content, and valid priority level are required.', 400));
+  }
+
+  if (hasNoSqlOperator(req.body)) {
+    return next(new AppError('Invalid input payload.', 400));
+  }
+
+  const mongoose = require('mongoose');
+  if (!mongoose.Types.ObjectId.isValid(courseId)) {
+    return next(new AppError('Invalid course ID.', 400));
+  }
+
+  if (typeof title !== 'string' || title.trim().length < 3 || title.trim().length > 100) {
+    return next(new AppError('Title must be between 3 and 100 characters.', 400));
+  }
+
+  if (typeof content !== 'string' || content.trim().length < 10 || content.trim().length > 1000) {
+    return next(new AppError('Content must be between 10 and 1000 characters.', 400));
+  }
+
+  if (!['Info', 'Warning', 'Urgent'].includes(priority)) {
+    return next(new AppError('Invalid priority level.', 400));
+  }
+
+  next();
+};
+
+const validateAnnouncementGet = (req, res, next) => {
+  const courseId = req.query.courseId || req.params.id;
+  if (!courseId) {
+    return next(new AppError('Course ID is required.', 400));
+  }
+
+  const mongoose = require('mongoose');
+  if (!mongoose.Types.ObjectId.isValid(courseId)) {
+    return next(new AppError('Invalid course ID.', 400));
+  }
+
+  next();
+};
+
+const validateAssignmentCreate = (req, res, next) => {
+  const { topicId, title, description, maxScore, dueDate } = req.body;
+  if (!topicId || !title) {
+    return next(new AppError('Title is required.', 400));
+  }
+
+  const mongoose = require('mongoose');
+  if (!mongoose.Types.ObjectId.isValid(topicId)) {
+    return next(new AppError('Invalid topic ID.', 400));
+  }
+
+  if (typeof title !== 'string' || title.trim().length < 3 || title.trim().length > 100) {
+    return next(new AppError('Title must be between 3 and 100 characters.', 400));
+  }
+
+  if (description !== undefined) {
+    if (typeof description !== 'string' || description.trim().length < 10 || description.trim().length > 1000) {
+      return next(new AppError('Description must be between 10 and 1000 characters.', 400));
+    }
+  }
+
+  if (maxScore !== undefined) {
+    const scoreNum = Number(maxScore);
+    if (!Number.isInteger(scoreNum) || scoreNum < 1 || scoreNum > 1000) {
+      return next(new AppError('Max score must be an integer between 1 and 1000.', 400));
+    }
+  }
+
+  next();
+};
+
+const validateGradeSubmission = (req, res, next) => {
+  const { grade, feedback } = req.body;
+  if (grade === undefined || !feedback) {
+    return next(new AppError('Grade and feedback comments are required.', 400));
+  }
+  const gradeNum = Number(grade);
+  if (isNaN(gradeNum) || gradeNum < 0) {
+    return next(new AppError('Grade must be between 0 and assignment maximum score.', 400));
+  }
+  if (typeof feedback !== 'string' || !feedback.trim()) {
+    return next(new AppError('Grade and feedback comments are required.', 400));
+  }
+  next();
+};
+
+const validateDoubtCreate = (req, res, next) => {
+  const { topicId, question } = req.body;
+  if (!topicId || !question) {
+    return next(new AppError('Question content cannot be empty.', 400));
+  }
+
+  const mongoose = require('mongoose');
+  if (!mongoose.Types.ObjectId.isValid(topicId)) {
+    return next(new AppError('Invalid topic ID.', 400));
+  }
+
+  if (typeof question !== 'string' || question.trim().length < 5 || question.trim().length > 500) {
+    return next(new AppError('Question must be between 5 and 500 characters.', 400));
+  }
+
+  next();
+};
+
+const validateAnswerCreate = (req, res, next) => {
+  const { content } = req.body;
+  if (!content) {
+    return next(new AppError('Answer text cannot be empty.', 400));
+  }
+
+  if (typeof content !== 'string' || content.trim().length < 5 || content.trim().length > 1000) {
+    return next(new AppError('Answer must be between 5 and 1000 characters.', 400));
+  }
+
+  next();
+};
+
+const validateQuizFeedbackSetup = (req, res, next) => {
+  const { topicId, questions } = req.body;
+  if (!topicId || !questions) {
+    return next(new AppError('Question text is required.', 400));
+  }
+
+  const mongoose = require('mongoose');
+  if (!mongoose.Types.ObjectId.isValid(topicId)) {
+    return next(new AppError('Invalid topic ID.', 400));
+  }
+
+  if (!Array.isArray(questions) || questions.length === 0) {
+    return next(new AppError('Question text is required.', 400));
+  }
+
+  next();
+};
+
+const validateBadgeCreate = (req, res, next) => {
+  const courseId = req.body.courseId || req.params.id;
+  const { title, iconUrl, triggerType } = req.body;
+
+  if (!courseId || !title || !iconUrl || !triggerType) {
+    return next(new AppError('Title and Icon URL are required.', 400));
+  }
+
+  const mongoose = require('mongoose');
+  if (!mongoose.Types.ObjectId.isValid(courseId)) {
+    return next(new AppError('Invalid course ID.', 400));
+  }
+
+  if (typeof title !== 'string' || title.trim().length < 3 || title.trim().length > 50) {
+    return next(new AppError('Title must be between 3 and 50 characters.', 400));
+  }
+
+  try {
+    const parsedUrl = new URL(iconUrl);
+    if (parsedUrl.protocol !== 'http:' && parsedUrl.protocol !== 'https:') {
+      throw new Error();
+    }
+  } catch (e) {
+    return next(new AppError('Must be a valid HTTP/HTTPS image URL', 400));
+  }
+
+  if (!['CourseCompletion', 'PerfectQuizzes', 'FastTrack'].includes(triggerType)) {
+    return next(new AppError('Invalid trigger type.', 400));
+  }
+
+  next();
+};
+
 module.exports = {
   validateRegister,
   validateLogin,
   validateProfileUpdate,
-  validateQuizSubmit
+  validateQuizSubmit,
+  validateAnnouncementCreate,
+  validateAnnouncementGet,
+  validateAssignmentCreate,
+  validateGradeSubmission,
+  validateDoubtCreate,
+  validateAnswerCreate,
+  validateQuizFeedbackSetup,
+  validateBadgeCreate
 };
+
+
+
+

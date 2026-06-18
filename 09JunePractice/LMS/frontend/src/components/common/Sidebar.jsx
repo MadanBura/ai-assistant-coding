@@ -306,6 +306,26 @@ export default function Sidebar() {
               <span>Create Course</span>
             </NavLink>
 
+            <NavLink
+              to="/instructor/modules/global"
+              className={({ isActive }) =>
+                `sidebar-item text-decoration-none ${isActive ? 'active' : ''}`
+              }
+            >
+              <span className="material-symbols-outlined">view_module</span>
+              <span>Create Module</span>
+            </NavLink>
+
+            <NavLink
+              to="/instructor/gamification/badges"
+              className={({ isActive }) =>
+                `sidebar-item text-decoration-none ${isActive ? 'active' : ''}`
+              }
+            >
+              <span className="material-symbols-outlined">military_tech</span>
+              <span>Gamification</span>
+            </NavLink>
+
             <div className="sidebar-divider" />
             <div className="sidebar-section-label">Account</div>
 

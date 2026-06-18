@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import Sidebar from '../../components/common/Sidebar';
 import logo from '../../assets/logo.svg';
+import BadgeGallery from '../../components/Course/BadgeGallery';
 
 export default function Profile({ currentUser = null }) {
   let authUser = null;
@@ -242,6 +243,12 @@ export default function Profile({ currentUser = null }) {
               >
                 Certificates ({completedCourses.length})
               </button>
+              <button
+                className={`profile-tab-btn ${activeTab === 'badges' ? 'active' : ''}`}
+                onClick={() => setActiveTab('badges')}
+              >
+                Achievements
+              </button>
             </div>
           )}
 
@@ -388,6 +395,12 @@ export default function Profile({ currentUser = null }) {
                   })}
                 </div>
               )}
+            </div>
+          )}
+
+          {activeTab === 'badges' && (
+            <div className="w-100">
+              <BadgeGallery />
             </div>
           )}
         </div>

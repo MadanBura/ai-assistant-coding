@@ -11,12 +11,12 @@ import Sidebar from '../../components/common/Sidebar';
  * @param {String} props.userRole - The role of the logged-in user ('Instructor' or 'Learner')
  * @param {Array} props.mockCourses - Initial list of courses for deletion tests
  */
-export default function CourseCreator({ userRole = 'Instructor', mockCourses = [] }) {
+export default function CourseCreator({ userRole = 'Instructor', mockCourses = null }) {
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('Software Engineering');
   const [description, setDescription] = useState('');
-  const [coursesList, setCoursesList] = useState(mockCourses);
+  const [coursesList, setCoursesList] = useState(mockCourses || []);
 
   // Stateful flags
   const [isSubmitting, setIsSubmitting] = useState(false);

@@ -30,8 +30,12 @@ import CreateModuleTopic from "./pages/Course/CreateModuleTopic";
 import ResourceManagement from "./pages/Course/ResourceManagement";
 import AssessmentBuilder from "./pages/Course/AssessmentBuilder";
 import CurriculumReorder from "./pages/Course/CurriculumReorder";
+import ModuleManagement from "./pages/Course/ModuleManagement";
+import GlobalModuleManagement from "./pages/Course/GlobalModuleManagement";
 import CourseAnalytics from "./pages/Course/CourseAnalytics";
 import InstructorSettings from "./pages/Auth/InstructorSettings";
+import InstructorBadgeManagement from "./pages/Course/InstructorBadgeManagement";
+import InstructorAnnouncements from "./pages/Course/InstructorAnnouncements";
 
 // Route Guard requiring authentication
 function ProtectedRoute({ children, allowedRole = null }) {
@@ -272,10 +276,34 @@ function MainRoutes() {
         }
       />
       <Route
+        path="/instructor/courses/:courseId/announcements"
+        element={
+          <ProtectedRoute allowedRole="Instructor">
+            <InstructorAnnouncements />
+          </ProtectedRoute>
+        }
+      />
+      <Route
         path="/instructor/courses/:courseId/curriculum/reorder"
         element={
           <ProtectedRoute allowedRole="Instructor">
             <CurriculumReorder />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/instructor/courses/:courseId/modules/manage"
+        element={
+          <ProtectedRoute allowedRole="Instructor">
+            <ModuleManagement />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/instructor/modules/global"
+        element={
+          <ProtectedRoute allowedRole="Instructor">
+            <GlobalModuleManagement />
           </ProtectedRoute>
         }
       />
@@ -308,6 +336,14 @@ function MainRoutes() {
         element={
           <ProtectedRoute allowedRole="Instructor">
             <InstructorSettings />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/instructor/gamification/badges"
+        element={
+          <ProtectedRoute allowedRole="Instructor">
+            <InstructorBadgeManagement />
           </ProtectedRoute>
         }
       />

@@ -20,6 +20,13 @@ export default function LearnerDashboard({ initialData = [], isLoading: propIsLo
 
   const [downloadingCertId, setDownloadingCertId] = useState(null);
 
+  const getInitials = (title) => {
+    if (!title) return '';
+    const words = title.split(' ').filter(w => w.trim().length > 0);
+    if (words.length === 1) return words[0].substring(0, 2).toUpperCase();
+    return (words[0][0] + words[1][0]).toUpperCase();
+  };
+
   let auth = null;
   try {
     auth = useAuth();
@@ -133,14 +140,22 @@ export default function LearnerDashboard({ initialData = [], isLoading: propIsLo
                 {lastActive && (
                   <div className="col-12 col-xl-8">
                     <div className="card-premium d-flex flex-column flex-md-row gap-4 h-100 align-items-center">
-                      <div className="rounded-3 overflow-hidden flex-shrink-0 bg-primary bg-opacity-5 d-flex align-items-center justify-content-center" style={{ width: '100%', maxWidth: '200px', aspectRatio: '16/9' }}>
-                        <span className="material-symbols-outlined text-primary" style={{ fontSize: '64px' }}>local_library</span>
+                      <div className="rounded-3 overflow-hidden flex-shrink-0 bg-primary bg-opacity-10 d-flex align-items-center justify-content-center border" style={{ width: '100%', maxWidth: '200px', aspectRatio: '16/9' }}>
+                        <span className="text-primary fw-bold" style={{ fontSize: '48px', letterSpacing: '2px' }}>{getInitials(lastActive.course.title)}</span>
                       </div>
                       <div className="flex-grow-1 d-flex flex-column gap-3 text-start w-100">
                         <div>
                           <p className="text-primary fw-bold small uppercase tracking-wider mb-1" style={{ fontSize: '11px' }}>{lastActive.progressPercent === 100 ? 'Completed Course' : 'Current Course'}</p>
-                          <h3 className="h5 fw-bold text-dark mb-1">{lastActive.course.title}</h3>
-                          <p className="text-secondary small mb-0">{lastActive.progressPercent === 100 ? 'Congratulations! You have completed this course.' : 'Complete your sequential modules and quizzes to unlock the final exam.'}</p>
+                          <h3 className="h5 fw-bold text-dark mb-1 d-flex align-items-center gap-2">
+                            {lastActive.course.title}
+                            {lastActive.finalExamPassed && (
+                              <span className="badge bg-success text-white px-2 py-1" style={{ fontSize: '10px' }}>
+                                <span className="material-symbols-outlined align-middle" style={{ fontSize: '14px' }}>check_circle</span>
+                                COMPLETED
+                              </span>
+                            )}
+                          </h3>
+                          <p className="text-secondary small mb-0">{lastActive.finalExamPassed ? 'Congratulations! You have earned your certificate for this course.' : (lastActive.progressPercent === 100 ? 'Take the final exam to earn your certificate.' : 'Complete your sequential modules and quizzes to unlock the final exam.')}</p>
                         </div>
                         <div>
                           <div className="d-flex justify-content-between align-items-center mb-1">
@@ -224,11 +239,19 @@ export default function LearnerDashboard({ initialData = [], isLoading: propIsLo
                         <div className="col-12 col-md-6 col-lg-4" key={cid}>
                           <div className="card-premium h-100 d-flex flex-column justify-content-between p-3">
                             <div>
-                              <div className="rounded-3 overflow-hidden mb-3 bg-light d-flex align-items-center justify-content-center text-secondary border" style={{ aspectRatio: '16/9' }}>
-                                <span className="material-symbols-outlined fs-1 text-muted">book</span>
+                              <div className="rounded-3 overflow-hidden mb-3 bg-light d-flex align-items-center justify-content-center border shadow-sm" style={{ aspectRatio: '16/9' }}>
+                                <span className="text-secondary fw-bold" style={{ fontSize: '32px', letterSpacing: '1px' }}>{getInitials(course.title)}</span>
                               </div>
-                              <h4 className="h6 fw-bold text-dark mb-2 leading-tight">{course.title}</h4>
-                              <p className="text-secondary small mb-3">{progressPercent}% Complete</p>
+                              <h4 className="h6 fw-bold text-dark mb-2 leading-tight d-flex justify-content-between align-items-start gap-2">
+                                <span>{course.title}</span>
+                                {finalExamPassed && (
+                                  <span className="badge bg-success text-white px-2 py-1 flex-shrink-0" style={{ fontSize: '10px' }}>
+                                    <span className="material-symbols-outlined align-middle" style={{ fontSize: '14px' }}>check_circle</span>
+                                    COMPLETED
+                                  </span>
+                                )}
+                              </h4>
+                              <p className="text-secondary small mb-3">{finalExamPassed ? '100% Complete & Certified' : `${progressPercent}% Complete`}</p>
                               <div className="progress mb-3" style={{ height: '6px', borderRadius: 'var(--radius-full)' }}>
                                 <div className="progress-bar bg-primary" style={{ width: `${progressPercent}%`, borderRadius: 'var(--radius-full)' }}></div>
                               </div>

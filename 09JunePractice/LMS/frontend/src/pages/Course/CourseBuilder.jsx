@@ -11,12 +11,12 @@ import Sidebar from '../../components/common/Sidebar';
  * @param {String} props.courseId - ID of the course being edited
  * @param {Array} props.initialCurriculum - List of modules in the course
  */
-export default function CourseBuilder({ courseId: propCourseId, initialCurriculum = [] }) {
+export default function CourseBuilder({ courseId: propCourseId, initialCurriculum = null }) {
   const params = useParams();
   const courseId = propCourseId || params.courseId;
 
-  const [curriculum, setCurriculum] = useState(initialCurriculum);
-  const [originalCurriculum, setOriginalCurriculum] = useState(initialCurriculum);
+  const [curriculum, setCurriculum] = useState(initialCurriculum || []);
+  const [originalCurriculum, setOriginalCurriculum] = useState(initialCurriculum || []);
 
   useEffect(() => {
     if ((!initialCurriculum || initialCurriculum.length === 0) && courseId) {
@@ -274,7 +274,21 @@ export default function CourseBuilder({ courseId: propCourseId, initialCurriculu
               <div className="vr text-secondary" style={{ height: '20px' }}></div>
               <h1 className="h6 fw-bold text-dark mb-0 ms-2">Course Curriculum</h1>
             </div>
-            <div>
+            <div className="d-flex align-items-center gap-2">
+              <Link
+                to={`/instructor/courses/${courseId}/announcements`}
+                className="btn-premium-secondary py-2 px-4 text-decoration-none d-flex align-items-center gap-1"
+              >
+                <span className="material-symbols-outlined fs-5">campaign</span>
+                <span>Announcements</span>
+              </Link>
+              <Link
+                to={`/instructor/courses/${courseId}/modules/manage`}
+                className="btn-premium-secondary py-2 px-4 text-decoration-none d-flex align-items-center gap-1"
+              >
+                <span className="material-symbols-outlined fs-5">edit</span>
+                <span>Manage Modules</span>
+              </Link>
               <button
                 className="btn-premium-primary py-2 px-4"
                 onClick={() => handleSaveOrder()}
@@ -333,10 +347,18 @@ export default function CourseBuilder({ courseId: propCourseId, initialCurriculu
                         key={topic.id}
                         className="list-group-item d-flex justify-content-between align-items-center px-0 bg-transparent py-2.5 border-light-subtle"
                       >
-                        <div className="d-flex align-items-center gap-2 text-secondary">
+                        <div className="d-flex align-items-center gap-2 text-secondary flex-grow-1">
                           <span className="material-symbols-outlined fs-5">article</span>
                           <span className="small fw-medium">{topic.title}</span>
                         </div>
+                        <Link 
+                          to={`/instructor/courses/${courseId}/topics/${topic.id || topic._id}/resources`}
+                          className="btn btn-sm btn-outline-primary py-1 px-2 d-flex align-items-center gap-1"
+                          style={{ fontSize: '11px' }}
+                        >
+                          <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>settings</span>
+                          Manage Topic
+                        </Link>
                       </li>
                     ))}
                   </ul>

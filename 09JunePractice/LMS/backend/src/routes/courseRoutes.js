@@ -13,6 +13,8 @@ router.delete('/courses/:id', verifyToken, verifyRole('Instructor'), courseContr
 
 // Curriculum design
 router.post('/courses/:id/modules', verifyToken, verifyRole('Instructor'), courseController.addModule);
+router.put('/modules/:moduleId', verifyToken, verifyRole('Instructor'), courseController.updateModule);
+router.delete('/modules/:moduleId', verifyToken, verifyRole('Instructor'), courseController.deleteModule);
 router.put('/courses/:id/curriculum/reorder', verifyToken, verifyRole('Instructor'), courseController.reorderModules);
 router.post('/modules/:moduleId/topics', verifyToken, verifyRole('Instructor'), courseController.addTopic);
 
